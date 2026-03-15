@@ -1,0 +1,18 @@
+{
+  "titulo": "Fracciones: El manual de supervivencia",
+  "descripcion": "Entendé las fracciones aplicadas a la vida real: dinero, tecnología y decisiones diarias. Dejá de lado las pizzas y aprendé a calcular lo que importa.",
+  "contenidoAbierto": [
+    {
+      "subtitulo": "¿Por qué fallamos al aprender fracciones?",
+      "parrafo": "El sistema tradicional insiste en enseñarnos a cortar tortas. Pero en la vida real, las fracciones las usamos para calcular el porcentaje de descuento en una compra, dividir gastos con amigos o entender cómo se consume el almacenamiento de nuestro celular."
+    },
+    {
+      "subtitulo": "El dinero y las fracciones (La regla del bolsillo)",
+      "parrafo": "Cuando vas al supermercado y ves un cartel de '50% de descuento en la segunda unidad', estás operando directamente con fracciones (1/2). Entender cómo multiplicar y dividir estas proporciones mentalmente te ahorra plata real todos los días."
+    }
+  ],
+  "cta": {
+    "mensaje": "Descargá el manual completo en PDF con los ejercicios de aplicación en tecnología y los hacks para resolver mentalmente.",
+    "boton": "Pedir PDF por WhatsApp"
+  }
+}
