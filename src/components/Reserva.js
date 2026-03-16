@@ -1,3 +1,5 @@
+import ClasePrueba from "./ClasePrueba";
+
 export default function Reserva() {
   // Acordate de reemplazar TUNUMERO por tu número real con el código de país (ej: 549...)
   const whatsappUrl =
@@ -25,7 +27,7 @@ export default function Reserva() {
           <div className="w-full min-h-450px border-2 border-dashed border-brand-light/50 rounded-xl flex flex-col items-center justify-center bg-gray-50 mb-8 p-6 text-center">
             <span className="text-brand-primary text-4xl mb-4">📅</span>
             <h3 className="text-xl font-bold text-gray-700 mb-2">
-              Integración de Calendario
+              <ClasePrueba />
             </h3>
             <p className="text-gray-500 max-w-md">
               {/* Acá vamos a pegar el código "iframe" que te da Calendly o Google
