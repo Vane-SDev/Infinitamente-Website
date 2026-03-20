@@ -3,9 +3,14 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const pathname = usePathname(); // Leemos la URL actual
+
+  // Variable booleana para saber si estamos en la ruta tech
+  const esRutaTech = pathname === "/programacion";
 
   // Función para cerrar el menú móvil al hacer clic en un enlace
   const cerrarMenu = () => setMenuAbierto(false);
@@ -21,21 +26,37 @@ export default function Navbar() {
         >
           <div className="bg-white/10 p-1 rounded-lg">
             <Image
-              src="/logo.png" // Asegurate de que este nombre coincida con tu archivo
-              alt="Logo Infinitamente Matemático"
+              src="/logo.png"
+              alt="Logo"
               width={48}
               height={48}
               className="rounded-md object-contain"
             />
           </div>
-          <span className="text-white font-bold text-xl tracking-wide hidden sm:block">
-            Infinitamente <span className="text-brand-primary">Matemático</span>
-          </span>
+
+          {/* LÓGICA DEL LOGO DINÁMICO */}
+          <div className="hidden lg:flex flex-col justify-center">
+            <span className="text-white font-bold text-xl tracking-wide leading-none">
+              Infinitamente{" "}
+              <span
+                className={esRutaTech ? "text-blue-500" : "text-brand-primary"}
+              >
+                Matemático
+              </span>
+            </span>
+
+            {/* Si estamos en /programacion, mostramos este subtítulo técnico */}
+            {esRutaTech && (
+              <span className="text-blue-400 text-[11px] font-mono tracking-[0.2em] uppercase mt-1">
+                Code_Lab
+              </span>
+            )}
+          </div>
         </Link>
 
         {/* Botón Hamburguesa (Solo visible en móviles) */}
         <button
-          className="sm:hidden text-brand-light hover:text-white transition-colors focus:outline-none z-50"
+          className="lg:hidden text-brand-light hover:text-white transition-colors focus:outline-none z-50"
           onClick={() => setMenuAbierto(!menuAbierto)}
           aria-label="Alternar menú"
         >
@@ -46,7 +67,6 @@ export default function Navbar() {
             viewBox="0 0 24 24"
           >
             {menuAbierto ? (
-              // Ícono de X (Cerrar)
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -54,7 +74,6 @@ export default function Navbar() {
                 d="M6 18L18 6M6 6l12 12"
               />
             ) : (
-              // Ícono de Hamburguesa
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
@@ -65,14 +84,33 @@ export default function Navbar() {
           </svg>
         </button>
 
-        {/* Navegación de Escritorio (Oculta en móviles) */}
-        <ul className="hidden sm:flex items-center gap-6 text-brand-light font-medium text-base">
+        {/* Navegación de Escritorio (Oculta en móviles, break en lg para dar espacio) */}
+        <ul className="hidden lg:flex items-center gap-6 text-brand-light font-medium text-sm">
           <li>
             <Link
-              href="/#temario"
+              href="/#servicios"
               className="hover:text-white transition-colors"
             >
-              Temario
+              Matemática
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/#servicios"
+              className="hover:text-white transition-colors"
+            >
+              Física
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/programacion"
+              className="flex items-center gap-2 hover:text-white transition-colors"
+            >
+              Programación
+              <span className="bg-brand-primary/20 text-brand-primary text-[10px] px-2 py-0.5 rounded-full uppercase tracking-wider border border-brand-primary/30">
+                Nuevo
+              </span>
             </Link>
           </li>
           <li>
@@ -80,12 +118,7 @@ export default function Navbar() {
               href="/#calendario"
               className="hover:text-white transition-colors"
             >
-              Reservar Clase
-            </Link>
-          </li>
-          <li>
-            <Link href="/#faq" className="hover:text-white transition-colors">
-              FAQ
+              Reservar
             </Link>
           </li>
           <li>
@@ -101,7 +134,7 @@ export default function Navbar() {
 
       {/* Navegación Móvil (Desplegable) */}
       <div
-        className={`sm:hidden absolute top-full left-0 w-full bg-brand-dark border-b border-brand-primary/30 shadow-xl transition-all duration-300 ease-in-out origin-top ${
+        className={`lg:hidden absolute top-full left-0 w-full bg-brand-dark border-b border-brand-primary/30 shadow-xl transition-all duration-300 ease-in-out origin-top ${
           menuAbierto
             ? "opacity-100 scale-y-100"
             : "opacity-0 scale-y-0 pointer-events-none"
@@ -110,11 +143,32 @@ export default function Navbar() {
         <ul className="flex flex-col px-6 py-4 gap-4 text-center font-medium">
           <li>
             <Link
-              href="/#temario"
+              href="/#servicios"
               onClick={cerrarMenu}
               className="block text-brand-light hover:text-white py-2"
             >
-              Temario
+              Matemática
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/#servicios"
+              onClick={cerrarMenu}
+              className="block text-brand-light hover:text-white py-2"
+            >
+              Física (Secundaria)
+            </Link>
+          </li>
+          <li>
+            <Link
+              href="/programacion"
+              onClick={cerrarMenu}
+              className="flex items-center justify-center gap-2 text-brand-light hover:text-white py-2"
+            >
+              Programación POO
+              <span className="bg-brand-primary text-white text-[10px] px-2 py-0.5 rounded-md uppercase tracking-wide">
+                Nuevo
+              </span>
             </Link>
           </li>
           <li>
@@ -124,15 +178,6 @@ export default function Navbar() {
               className="block text-brand-light hover:text-white py-2"
             >
               Reservar Clase
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/#faq"
-              onClick={cerrarMenu}
-              className="block text-brand-light hover:text-white py-2"
-            >
-              FAQ
             </Link>
           </li>
           <li className="pt-2 border-t border-brand-primary/20 mt-2">

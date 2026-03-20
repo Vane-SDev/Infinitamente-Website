@@ -15,6 +15,8 @@
   --color-brand-dark: #37125C;
   --color-brand-primary: #A728D4;
   --color-brand-light: #D4A2EB;
+  --color-black: #111111;
+  --color-white: #ffffff;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -22,6 +24,33 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
+}
+
+@layer utilities {
+  @keyframes mathFloat {
+    0%, 100% {
+      transform: translateY(0px) rotate(0deg);
+    }
+    50% {
+      transform: translateY(-30px) rotate(5deg);
+    }
+  }
+
+  .animate-math-float {
+    animation: mathFloat 20s ease-in-out infinite;
+  }
+
+  /* Variantes de velocidad para las capas */
+  .animate-math-float-slow {
+    animation: mathFloat 30s ease-in-out infinite;
+  }
+  .animate-math-float-fast {
+    animation: mathFloat 15s ease-in-out infinite;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
 }
 
 body {

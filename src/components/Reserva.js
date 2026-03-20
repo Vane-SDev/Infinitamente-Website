@@ -1,21 +1,31 @@
+"use client";
+
 import ClasePrueba from "./ClasePrueba";
+import { motion } from "framer-motion";
 
 export default function Reserva() {
-  // Acordate de reemplazar TUNUMERO por tu número real con el código de país (ej: 549...)
-  const whatsappUrl =
-    "https://api.whatsapp.com/send?phone=TUNUMERO&text=Hola%20Vane,%20quiero%20reservar%20una%20clase%20de%20prueba.";
+  // Llamamos a la variable de entorno. Si por algún motivo falla, dejamos un fallback vacío para que no rompa la app.
+  const numero = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "";
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${numero}&text=Hola%20Vane,%20quiero%20reservar%20una%20clase%20de%20prueba.`;
 
   return (
     <section
-      id="calendario"
+      id="reserva"
       className="py-24 px-6 sm:px-12 bg-brand-light/10 text-gray-900"
     >
-      <div className="max-w-5xl mx-auto">
+      {/* Contenedor animado: Entra flotando suavemente desde abajo */}
+      <motion.div
+        className="max-w-5xl mx-auto"
+        initial={{ opacity: 0, y: 30 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-100px" }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
         <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-5xl font-extrabold text-brand-dark tracking-tight mb-4">
+          <h2 className="text-3xl sm:text-5xl font-extrabold text-brand-light tracking-tight mb-4">
             Reservá tu clase
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-brand-light max-w-2xl mx-auto">
             Elegí el horario que mejor te quede. En la primera sesión evaluamos
             tu nivel, definimos tu objetivo y armamos un plan de estudio a
             medida.
@@ -23,17 +33,9 @@ export default function Reserva() {
         </div>
 
         <div className="bg-white p-6 sm:p-10 rounded-2xl shadow-md border border-gray-100 flex flex-col items-center">
-          {/* Contenedor del Calendario (Placeholder) */}
-          <div className="w-full min-h-450px border-2 border-dashed border-brand-light/50 rounded-xl flex flex-col items-center justify-center bg-gray-50 mb-8 p-6 text-center">
-            <span className="text-brand-primary text-4xl mb-4">📅</span>
-            <h3 className="text-xl font-bold text-gray-700 mb-2">
-              <ClasePrueba />
-            </h3>
-            <p className="text-gray-500 max-w-md">
-              {/* Acá vamos a pegar el código "iframe" que te da Calendly o Google
-              Calendar. Esto permite que los alumnos vean tus horarios libres y
-              agenden automáticamente en tu zona horaria. */}
-            </p>
+          {/* Contenedor del Calendario */}
+          <div className="w-full flex flex-col items-center justify-center bg-gray-50 mb-8 p-6 text-center rounded-xl">
+            <ClasePrueba />
           </div>
 
           <div className="w-full border-t border-gray-100 pt-8 text-center flex flex-col items-center">
@@ -44,9 +46,8 @@ export default function Reserva() {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-[#25D366] hover:bg-[#1EBE57] text-white font-bold py-3 px-8 rounded-lg transition-all shadow-md flex items-center gap-3"
+              className="bg-[#25D366] hover:bg-[#1EBE57] text-white font-bold py-3 px-8 rounded-lg transition-all shadow-md flex items-center gap-3 transform hover:-translate-y-1"
             >
-              {/* Ícono simple de WhatsApp en SVG */}
               <svg
                 className="w-6 h-6"
                 fill="currentColor"
@@ -59,7 +60,7 @@ export default function Reserva() {
             </a>
           </div>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 }

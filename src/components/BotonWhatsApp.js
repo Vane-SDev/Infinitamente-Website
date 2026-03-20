@@ -36,7 +36,7 @@ export default function BotonWhatsApp() {
 
   return (
     <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
-      {/* Burbuja de mensaje con animación controlada por el estado */}
+      
       <div
         className={`bg-white text-gray-800 text-sm sm:text-base font-semibold py-3 px-5 rounded-2xl rounded-br-none shadow-xl border border-gray-100 transform transition-all duration-500 ease-in-out origin-bottom-right ${
           mostrarBurbuja

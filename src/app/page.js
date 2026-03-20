@@ -1,40 +1,67 @@
-import Temario from "../components/Temario";
+import Servicios from "../components/Servicios";
 import Reserva from "../components/Reserva";
 import Faq from "../components/Faq";
-
-
+import Footer from "../components/Footer";
+import MathParticles from "../components/Mathparticles";
 
 export default function Home() {
   return (
     <>
-      <main className="min-h-screen bg-brand-dark text-white font-sans flex flex-col items-center justify-center p-6 sm:p-12">
-        <div className="max-w-4xl text-center space-y-8">
-          {/* Título usando tu violeta principal */}
+      <main className="relative min-h-screen bg-brand-dark text-white font-sans flex flex-col items-center justify-center p-6 sm:p-12 overflow-hidden z-0">
+        {/* CAPA 1: Partículas matemáticas tipo espacio (el efecto principal) */}
+        {/* count controla cuántos símbolos hay en pantalla */}
+        <MathParticles count={90} className="-z-10" />
+
+        {/* CAPA 2: Resplandor central suave */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-300px md:w-700px h-300px md:h-700px bg-brand-primary/15 rounded-full blur-[120px] -z-20 pointer-events-none animate-pulse" />
+
+        {/* CAPA 3: Resplandor inferior sutil para dar sensación de horizonte */}
+        <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-200px bg-linear-to-t from-brand-primary/5 to-transparent -z-20 pointer-events-none" />
+
+        {/* CONTENIDO CENTRAL */}
+        <div className="max-w-4xl text-center space-y-8 z-10 relative">
+          <div className="inline-block py-1 px-4 rounded-full bg-white/5 border border-brand-light/20 text-brand-light text-sm font-semibold tracking-widest uppercase mb-2 shadow-[0_0_15px_rgba(168,85,247,0.1)]">
+            Clases Online • Para estudiantes de habla hispana
+          </div>
+
           <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-white drop-shadow-md">
-            Infinitamente <span className="text-brand-primary">Matemático</span>
+            Infinitamente <br className="sm:hidden" />
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-brand-light to-brand-primary">
+              Matemático
+            </span>
           </h1>
 
-          {/* Subtítulo usando el lila para buen contraste sobre el fondo oscuro */}
           <p className="text-lg sm:text-xl text-brand-light leading-relaxed max-w-2xl mx-auto font-medium">
-            Dominá la matemática con clases online personalizadas. Estrategias
-            directas y resolución de problemas reales, a tu propio ritmo.
+            La matemática no tiene que ser difícil, solo se necesita la guía
+            adecuada. Estrategias directas y resolución de problemas reales, a
+            tu propio ritmo.
           </p>
 
-          {/* Botones de acción */}
           <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
-            <button className="bg-brand-primary hover:bg-purple-600 text-white font-bold py-3 px-8 rounded-lg transition-all shadow-lg">
+            <a
+              href="#reserva"
+              className="bg-brand-primary hover:bg-purple-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] transform hover:-translate-y-1 flex items-center justify-center"
+            >
               Reservar clase de prueba
-            </button>
-
-            <button className="border-2 border-brand-light text-brand-light hover:bg-brand-light hover:text-brand-dark font-bold py-3 px-8 rounded-lg transition-all">
+            </a>
+            <a
+              href="#temario"
+              className="border border-brand-light text-brand-light hover:bg-brand-light hover:text-brand-dark font-bold py-4 px-8 rounded-xl transition-all duration-300 flex items-center justify-center"
+            >
               Ver temario
-            </button>
+            </a>
           </div>
         </div>
       </main>
-      <Temario />
-      <Reserva/>     
+
+      <div id="servicios">
+        <Servicios />
+      </div>
+      <div id="reserva">
+        <Reserva />
+      </div>
       <Faq />
+      <Footer />
     </>
   );
 }
