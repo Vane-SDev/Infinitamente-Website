@@ -3,7 +3,7 @@ export default function Footer() {
   const añoActual = new Date().getFullYear();
 
   return (
-    <footer className="bg-[#0b0f19] border-t border-gray-800 text-gray-400 py-12 px-6">
+    <footer className="bg-[#0b0f19] border-t border-gray-800 text-gray-400 pt-12 pb-32 sm:pb-12 px-6">
       <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
         {/* Columna 1: Marca y propuesta de valor */}
         <div className="md:pr-8">
@@ -86,7 +86,7 @@ export default function Footer() {
             href="https://vswebdesign.online"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-300 hover:text-white transition-colors font-semibold"
+            className="text-gray-300 hover:text-white transition-colors font-semibold z-10 relative"
           >
             vs webdesign
           </a>

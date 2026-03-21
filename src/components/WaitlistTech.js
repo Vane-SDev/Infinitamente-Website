@@ -1,5 +1,5 @@
 export default function WaitlistTech() {
-  // Acordate de reemplazar TUNUMERO
+  
   const numero = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "";
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${numero}&text=Hola%20Vane,%20quiero%20anotarme%20en%20la%20lista%20de%20espera%20para%20el%20Programa%20de%20Nivelaci%C3%B3n.`;
 

@@ -35,24 +35,23 @@ export default function BotonWhatsApp() {
   }, []);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3">
+    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 pointer-events-none">
       
-      <div
-        className={`bg-white text-gray-800 text-sm sm:text-base font-semibold py-3 px-5 rounded-2xl rounded-br-none shadow-xl border border-gray-100 transform transition-all duration-500 ease-in-out origin-bottom-right ${
+      <div className={`bg-white text-gray-800 text-sm sm:text-base font-semibold py-3 px-5 rounded-2xl rounded-br-none shadow-xl border border-gray-100 transform transition-all duration-500 ease-in-out origin-bottom-right ${
           mostrarBurbuja
-            ? "opacity-100 scale-100 translate-y-0"
+            ? "opacity-100 scale-100 translate-y-0 pointer-events-auto"
             : "opacity-0 scale-95 translate-y-4 pointer-events-none"
         }`}
       >
         ¿Dudas? ¡Escribime acá! 👋
       </div>
 
-      {/* Ícono de WhatsApp estático pero clickeable */}
+      {/* 3. Reactivamos los clics en el botón físico con 'pointer-events-auto' */}
       <Link
         href={url}
         target="_blank"
         rel="noopener noreferrer"
-        className="bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center cursor-pointer"
+        className="pointer-events-auto bg-[#25D366] text-white p-4 rounded-full shadow-lg hover:scale-110 transition-transform duration-300 flex items-center justify-center cursor-pointer"
         aria-label="Contactar por WhatsApp"
       >
         <svg
