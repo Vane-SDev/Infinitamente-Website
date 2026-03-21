@@ -54,7 +54,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Botón Hamburguesa (Solo visible en móviles) */}
+        {/* Botón Hamburguesa*/}
         <button
           className="lg:hidden text-brand-light hover:text-white transition-colors focus:outline-none z-50"
           onClick={() => setMenuAbierto(!menuAbierto)}
@@ -84,7 +84,7 @@ export default function Navbar() {
           </svg>
         </button>
 
-        {/* Navegación de Escritorio (Oculta en móviles, break en lg para dar espacio) */}
+        {/* Navegación de Escritorio */}
         <ul className="hidden lg:flex items-center gap-6 text-brand-light font-medium text-sm">
           <li>
             <Link

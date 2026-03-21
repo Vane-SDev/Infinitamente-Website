@@ -7,8 +7,8 @@ export default function BotonWhatsApp() {
   // Estado para controlar si la burbuja se ve o no
   const [mostrarBurbuja, setMostrarBurbuja] = useState(false);
 
-  // Reemplazá TUNUMERO por tu celular (ej: 549...)
-  const numero = "5492645211880";
+  
+  const numero = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5492643171733";
   const mensaje =
     "Hola Vane, estuve viendo la web. ¿Me pasás info para reservar una clase?";
   const url = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensaje)}`;
