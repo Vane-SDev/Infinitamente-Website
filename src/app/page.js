@@ -1,5 +1,5 @@
 import Servicios from "../components/Servicios";
-import Resenas from "../components/Resenas"; // Nuevo componente de prueba social
+import Resenas from "../components/Resenas"; 
 import Reserva from "../components/Reserva";
 import Faq from "../components/Faq";
 import Footer from "../components/Footer";
@@ -8,7 +8,7 @@ import MathParticles from "../components/Mathparticles";
 export default function Home() {
   return (
     <>
-      {/* El MAIN ahora envuelve todo el contenido de la página */}
+      
       <main className="w-full flex flex-col">
         {/* SECCIÓN HERO */}
         <section className="relative min-h-screen bg-brand-dark text-white font-sans flex flex-col items-center justify-center p-6 sm:p-12 overflow-hidden z-0">
@@ -52,12 +52,10 @@ export default function Home() {
           </div>
         </section>
 
-        {/* RESTO DE LAS SECCIONES */}
         <div id="servicios">
           <Servicios />
         </div>
 
-        {/* Prueba Social ANTES de pedir la reserva */}
         <Resenas />
 
         <div id="reserva">

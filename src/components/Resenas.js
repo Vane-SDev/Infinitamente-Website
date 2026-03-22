@@ -1,17 +1,16 @@
 "use client";
-// Importamos la "base de datos" estática
 import { opinionesGMB } from "../data/resenasGoogle";
 
 export default function Resenas() {
   return (
-    <section className="py-24 bg-[#080b14] px-6 border-y border-gray-800">
-      <div className="max-w-6xl mx-auto">
+    // Redujimos el padding vertical en mobile (py-12) y lo dejamos grande en PC (md:py-24)
+    <section className="py-12 md:py-24 bg-[#080b14] border-y border-gray-800 overflow-hidden w-full relative">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         {/* Encabezado */}
-        <div className="text-center mb-16 flex flex-col items-center">
-          <div className="flex items-center justify-center gap-3 mb-4 bg-gray-900/50 py-2 px-6 rounded-full border border-gray-800">
-            {/* Logo SVG de Google */}
+        <div className="text-center mb-10 md:mb-16 flex flex-col items-center">
+          <div className="flex items-center justify-center gap-2 mb-4 bg-gray-900/50 py-1.5 px-4 md:py-2 md:px-6 rounded-full border border-gray-800">
             <svg
-              className="w-6 h-6"
+              className="w-5 h-5 md:w-6 md:h-6"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
             >
@@ -32,34 +31,38 @@ export default function Resenas() {
                 fill="#EA4335"
               />
             </svg>
-            <span className="text-xl font-bold text-white">5.0</span>
-            <div className="flex text-yellow-500 text-lg">★★★★★</div>
+            <span className="text-lg md:text-xl font-bold text-white">5.0</span>
+            <div className="flex text-yellow-500 text-base md:text-lg">
+              ★★★★★
+            </div>
           </div>
 
-          <h2 className="text-3xl font-bold text-white mb-4">
-            No me creas a mí,{" "}
-            <span className="text-brand-primary">creele a ellos</span>
+          <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">
+            Lo que dicen{" "}
+            <span className="text-brand-primary">mis alumnos</span>
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-            Más de 15 opiniones perfectas avalan la metodología. Estudiantes que
-            destrabaron sus materias y avanzaron en sus carreras.
+          <p className="text-gray-400 text-base md:text-lg max-w-2xl mx-auto px-2">
+            Experiencias reales de estudiantes que lograron destrabar sus
+            materias y avanzar en sus carreras.
           </p>
         </div>
 
-        {/* Grilla de Reseñas */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {/* Carrusel en Mobile / Grilla en Desktop */}
+        {/* Agregamos pr-10 en mobile para que la última tarjeta no quede pegada al borde al scrollear */}
+        <div className="flex md:grid md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-8 md:pb-0 hide-scrollbar -mb-4 px-2 md:px-0 pr-10 md:pr-0">
           {opinionesGMB.map((opinion) => (
             <div
               key={opinion.id}
-              className="bg-gray-900 border border-gray-800 p-8 rounded-2xl shadow-lg hover:border-brand-primary/30 transition-all flex flex-col h-full"
+              // min-w-[85vw] está bien, el problema era el contenido interno
+              className="w-[85vw] sm:w-[65vw] md:w-full snap-center shrink-0 bg-gray-900 border border-gray-800 p-6 md:p-8 rounded-2xl shadow-lg flex flex-col h-auto relative overflow-hidden"
             >
+              {/* Estrellas y Logo */}
               <div className="flex justify-between items-start mb-4">
-                <div className="flex text-yellow-500 text-lg">
+                <div className="flex text-yellow-500 text-base md:text-lg">
                   {"★".repeat(opinion.estrellas)}
                 </div>
-                {/* Logo de Google en cada tarjeta */}
                 <svg
-                  className="w-5 h-5 opacity-50"
+                  className="w-4 h-4 md:w-5 md:h-5 opacity-50 shrink-0 ml-2"
                   viewBox="0 0 24 24"
                   xmlns="http://www.w3.org/2000/svg"
                 >
@@ -82,19 +85,22 @@ export default function Resenas() {
                 </svg>
               </div>
 
-              <p className="text-gray-300 leading-relaxed italic mb-8 grow">
+              <p className="text-gray-300 text-sm md:text-base leading-relaxed italic mb-8 grow break-word whitespace-normal w-full">
                 &quot;{opinion.texto}&quot;
               </p>
 
-              <div className="flex items-center gap-3 border-t border-gray-800 pt-4 mt-auto">
-                <div className="w-10 h-10 rounded-full bg-brand-primary/20 flex items-center justify-center text-brand-primary font-bold text-lg shrink-0">
+              {/* Autor y Fecha */}
+              <div className="flex items-center gap-3 border-t border-gray-800 pt-4 mt-auto shrink-0 w-full">
+                <div className="w-9 h-9 md:w-10 md:h-10 rounded-full bg-brand-primary/20 flex items-center justify-center text-brand-primary font-bold text-sm md:text-lg shrink-0">
                   {opinion.nombre.charAt(0)}
                 </div>
-                <div>
-                  <p className="text-white font-semibold text-sm line-clamp-1">
+                <div className="overflow-hidden grow">
+                  <p className="text-white font-semibold text-xs md:text-sm truncate w-full">
                     {opinion.nombre}
                   </p>
-                  <p className="text-gray-500 text-xs">{opinion.fecha}</p>
+                  <p className="text-gray-500 text-[10px] md:text-xs truncate">
+                    {opinion.fecha}
+                  </p>
                 </div>
               </div>
             </div>
@@ -102,21 +108,19 @@ export default function Resenas() {
         </div>
 
         {/* Botón de acción */}
-        <div className="text-center mt-12">
-          
+        <div className="text-center mt-6 md:mt-12 relative z-10">
           <a
             href="https://g.page/r/CQOh2Z-tmLQREAE"
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 border border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white font-medium py-3 px-6 rounded-xl transition-all"
+            className="inline-flex items-center gap-2 border border-gray-700 text-gray-300 hover:bg-gray-800 hover:text-white font-medium py-2.5 px-5 md:py-3 md:px-6 rounded-xl transition-all text-sm md:text-base shadow-lg"
           >
-            Ver las 15 opiniones en Google
+            Ver todas las opiniones en Google
             <svg
-              className="w-4 h-4"
+              className="w-4 h-4 shrink-0"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
             >
               <path
                 strokeLinecap="round"

@@ -23,13 +23,28 @@ export default function Faq() {
     {
       pregunta: "¿Qué plataforma usamos para las clases online?",
       respuesta:
-        "Las sesiones se dan por Google Meet (o Zoom). Uso una pizarra digital interactiva para que puedas ver la resolución de los problemas matemáticos en tiempo real, paso a paso.",
+        "Las sesiones se dan por Google Meet. Uso una pizarra digital interactiva para que puedas participar como en una clases presencial, ver la resolución de los problemas matemáticos en tiempo real, paso a paso.",
     },
     {
       pregunta:
         "¿Dan preparación para exámenes de ingreso o preuniversitarios?",
       respuesta:
-        "Sí. Hacemos entrenamiento intensivo enfocado en los temarios específicos de cada instituto, resolviendo modelos de exámenes de años anteriores para asegurar el nivel necesario.",
+        "Sí. Hacemos entrenamiento intensivo enfocado en los temarios específicos de cada instituto, resolviendo modelos de exámenes para asegurar el nivel necesario.",
+    },
+    {
+      pregunta: "¿Puedo tomar una clase de prueba antes de decidirme?",
+      respuesta:
+        "Sí, ofrezco una clase de prueba gratuita de 20 minutos para que puedas conocer mi metodología y resolver cualquier duda antes de reservar una clase normal.",
+    },
+    {
+      pregunta: "¿Qué diferencia hay entre las clases individuales y grupales?",
+      respuesta:
+        "Las clases individuales se adaptan 100% a tus necesidades y ritmo, mientras que las grupales fomentan el aprendizaje colaborativo y la resolución de dudas comunes entre compañeros.",
+    },  
+    {
+      pregunta: "¿Cómo puedo reservar una clase o paquete de clases?",
+      respuesta:
+        "Es muy fácil. Solo tenés que hacer clic en el botón de WhatsApp que aparece en la esquina inferior derecha de la web, enviarme un mensaje y coordinamos el día y horario que mejor te convenga.",
     },
   ];
 

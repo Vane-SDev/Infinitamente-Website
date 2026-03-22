@@ -22,7 +22,7 @@ export const metadata = {
   ],
   // Etiquetas para WhatsApp/LinkedIn/Twitter
   openGraph: {
-    title: "Dominá la Matemática, Física y Programación | Infinitamente STEM",
+    title: "Dominá la Matemática, Física y Programación | Infinitamente Matemático",
     description:
       "Clases online personalizadas con docente experimentada. Aprobá entendiendo.",
     url: "https://infinitamentematematico.com",
@@ -42,12 +42,12 @@ const schemaMarkup = {
   url: "https://infinitamentematematico.com",
   telephone: "+5492643171733",
   priceRange: "$$",
-  // Eliminamos address y geo. Agregamos alcance digital:
+  
   areaServed: {
     "@type": "GeoCircle",
     description: "Hispanoamérica y estudiantes de habla hispana a nivel global",
   },
-  availableLanguage: "es", // Le decimos a Google tu idioma nativo de enseñanza
+  availableLanguage: "es", 
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
@@ -55,7 +55,7 @@ const schemaMarkup = {
     closes: "20:00",
   },
   sameAs: ["https://g.page/r/CQOh2Z-tmLQREAE"],
-  // (Aggregate Rating) - Actualizado a tus 15 reseñas reales
+  // (Aggregate Rating) 
   aggregateRating: {
     "@type": "AggregateRating",
     ratingValue: "5.0",
