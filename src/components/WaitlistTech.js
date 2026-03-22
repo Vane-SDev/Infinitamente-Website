@@ -9,7 +9,7 @@ export default function WaitlistTech() {
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
         <span className="bg-blue-600 text-white text-xs font-bold uppercase tracking-widest py-1 px-3 rounded-md mb-6 inline-block">
-          Próxima Edición: Mayo 2026
+          Próxima Edición: Abril 2026
         </span>
 
         {/* Título académico y formal */}
