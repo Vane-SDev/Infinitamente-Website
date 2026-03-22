@@ -19,12 +19,17 @@ export const metadata = {
     "aprender programación lógica",
     "ingreso universidad STEM",
     "profesora matemática online",
+    "nivelación informática",
+    "clases particulares física",
+    "tutoría matemática hispanoamérica",
+    "preparación exámenes ingreso",
+    "clases de algoritmos online",
   ],
   // Etiquetas para WhatsApp/LinkedIn/Twitter
   openGraph: {
     title: "Dominá la Matemática, Física y Programación | Infinitamente Matemático",
     description:
-      "Clases online personalizadas con docente experimentada. Aprobá entendiendo.",
+      "Clases online de Matemática, Física y Programación. Aprobá entendiendo.",
     url: "https://infinitamentematematico.com",
     siteName: "Infinitamente Matemático",
     locale: "es_AR",
