@@ -114,7 +114,7 @@ export default function Footer() {
             rel="noopener noreferrer"
             className="text-gray-300 hover:text-white transition-colors font-semibold z-10 relative"
           >
-            vs webdesign
+            VS Webdesign
           </a>
         </p>
       </div>
