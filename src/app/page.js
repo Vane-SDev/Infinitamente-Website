@@ -37,7 +37,7 @@ export default function Home() {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center pt-6">
               <a
-                href="#reserva"
+                href="#calendario"
                 className="bg-brand-primary hover:bg-purple-600 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(168,85,247,0.3)] hover:shadow-[0_0_30px_rgba(168,85,247,0.6)] transform hover:-translate-y-1 flex items-center justify-center"
               >
                 Reservar clase de prueba
@@ -58,7 +58,7 @@ export default function Home() {
 
         <Resenas />
 
-        <div id="reserva">
+        <div id="calendario">
           <Reserva />
         </div>
 

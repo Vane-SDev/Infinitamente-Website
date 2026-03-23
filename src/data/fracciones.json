@@ -1,6 +1,12 @@
 {
   "titulo": "Fracciones: El manual de supervivencia",
   "descripcion": "Entendé las fracciones aplicadas a la vida real: dinero, tecnología y decisiones diarias. Dejá de lado las pizzas y aprendé a calcular lo que importa.",
+  "beneficios": [
+    "Calcular descuentos en el supermercado mentalmente.",
+    "Entender cómo funcionan los porcentajes de descarga y baterías.",
+    "Aprender el truco de la equivalencia para sumar sin frustrarte.",
+    "Resolver ejercicios de lógica aplicados a la programación."
+  ],
   "contenidoAbierto": [
     {
       "subtitulo": "¿Por qué fallamos al aprender fracciones?",
@@ -13,6 +19,6 @@
   ],
   "cta": {
     "mensaje": "Descargá el manual completo en PDF con los ejercicios de aplicación en tecnología y los hacks para resolver mentalmente.",
-    "boton": "Pedir PDF por WhatsApp"
+    "boton": "Pedir PDF gratis por WhatsApp"
   }
 }

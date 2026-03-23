@@ -51,7 +51,7 @@ export default function Servicios() {
       desc: "No dejes tu ingreso al azar. Nivelación intensiva, resolución de exámenes reales y estrategias exactas para superar las pruebas de acceso sin sorpresas.",
       temario: [
         "Álgebra y polinomios",
-        "Funciones (lineal, cuadrática, exponencial)",
+        "Funciones (lineal, cuadrática, exponencial, etc.)",
         "Trigonometría analítica",
         "Física orientada al ingreso",
       ],
@@ -59,12 +59,14 @@ export default function Servicios() {
     },
     {
       titulo: "Apoyo Universitario",
-      desc: "¿Te trabaste con una guía? Clases 100% prácticas. Traé tus ejercicios o modelos de evaluación y los resolvemos paso a paso hasta que domines el tema.",
+      desc: "¿Te trabaste con una guía o un tema del programa? Clases 100% prácticas. Traé tus ejercicios o modelos de evaluación y los resolvemos paso a paso hasta que domines el tema.",
       temario: [
         "Análisis Matemático (Límites, Derivadas, Integrales)",
         "Álgebra Lineal (Matrices, Vectores)",
         "Probabilidad y Estadística",
         "Preparación de trabajos prácticos",
+        "Matemática para carreras de software (Lógica, Algoritmos, Complejidad)",
+        "Matemática AVanzada (Ecuaciones Diferenciales, Series, etc.)",
       ],
       ctaTexto: "Destrabar ejercicios",
     },

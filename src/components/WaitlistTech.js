@@ -9,7 +9,7 @@ export default function WaitlistTech() {
         <div className="absolute top-0 right-0 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 pointer-events-none"></div>
 
         <span className="bg-blue-600 text-white text-xs font-bold uppercase tracking-widest py-1 px-3 rounded-md mb-6 inline-block">
-          Próxima Edición: Abril 2026
+          Próxima Edición: Mayo 2026
         </span>
 
         {/* Título académico y formal */}
@@ -29,11 +29,11 @@ export default function WaitlistTech() {
             algoritmos
           </strong>
           . Si no tenés esta base, el primer semestre se vuelve un muro
-          imposible de pasar.
+          dificil de pasar.
         </p>
 
         <p className="text-gray-400 text-md mb-10 max-w-xl mx-auto">
-          Este programa intensivo está diseñado para que superes los exámenes de
+          Este programa intensivo está diseñado para que superés los exámenes de
           ingreso a la universidad y construyas la estructura mental necesaria
           para dominar cualquier lenguaje.
         </p>
@@ -53,8 +53,8 @@ export default function WaitlistTech() {
         </div>
 
         <p className="text-gray-500 text-xs mt-2 border-t border-gray-800 pt-6 max-w-lg mx-auto">
-          Anotarse en la lista no implica compromiso de pago. Te enviaremos el
-          temario completo y te avisaremos 48hs antes de abrir las inscripciones
+          Anotarse en la lista no implica compromiso de pago. Te enviaré el
+          temario completo y te avisaré 48hs antes de abrir las inscripciones
           generales.
         </p>
       </div>

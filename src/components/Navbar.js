@@ -7,12 +7,9 @@ import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
-  const pathname = usePathname(); // Leemos la URL actual
-
-  // Variable booleana para saber si estamos en la ruta tech
+  const pathname = usePathname();
   const esRutaTech = pathname === "/programacion";
 
-  // Función para cerrar el menú móvil al hacer clic en un enlace
   const cerrarMenu = () => setMenuAbierto(false);
 
   return (
@@ -27,14 +24,15 @@ export default function Navbar() {
           <div className="bg-white/10 p-1 rounded-lg">
             <Image
               src="/logo.png"
-              alt="Logo"
+              alt="Logo Infinitamente Matemático"
               width={48}
               height={48}
               className="rounded-md object-contain"
+              style={{ width: "auto", height: "auto" }}
+              priority
             />
           </div>
 
-          {/* LÓGICA DEL LOGO DINÁMICO */}
           <div className="hidden lg:flex flex-col justify-center">
             <span className="text-white font-bold text-xl tracking-wide leading-none">
               Infinitamente{" "}
@@ -44,8 +42,6 @@ export default function Navbar() {
                 Matemático
               </span>
             </span>
-
-            {/* Si estamos en /programacion, mostramos este subtítulo técnico */}
             {esRutaTech && (
               <span className="text-blue-400 text-[11px] font-mono tracking-[0.2em] uppercase mt-1">
                 Code_Lab
@@ -54,7 +50,7 @@ export default function Navbar() {
           </div>
         </Link>
 
-        {/* Botón Hamburguesa*/}
+        {/* Botón Hamburguesa */}
         <button
           className="lg:hidden text-brand-light hover:text-white transition-colors focus:outline-none z-50"
           onClick={() => setMenuAbierto(!menuAbierto)}
@@ -91,15 +87,7 @@ export default function Navbar() {
               href="/#servicios"
               className="hover:text-white transition-colors"
             >
-              Matemática
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/#servicios"
-              className="hover:text-white transition-colors"
-            >
-              Física
+              Clases
             </Link>
           </li>
           <li>
@@ -132,7 +120,7 @@ export default function Navbar() {
         </ul>
       </div>
 
-      {/* Navegación Móvil (Desplegable) */}
+      {/* Navegación Móvil (Desplegable) - Corregido y sin duplicar */}
       <div
         className={`lg:hidden absolute top-full left-0 w-full bg-brand-dark border-b border-brand-primary/30 shadow-xl transition-all duration-300 ease-in-out origin-top ${
           menuAbierto
@@ -147,16 +135,7 @@ export default function Navbar() {
               onClick={cerrarMenu}
               className="block text-brand-light hover:text-white py-2"
             >
-              Matemática
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/#servicios"
-              onClick={cerrarMenu}
-              className="block text-brand-light hover:text-white py-2"
-            >
-              Física (Secundaria)
+              Clases
             </Link>
           </li>
           <li>
@@ -165,7 +144,7 @@ export default function Navbar() {
               onClick={cerrarMenu}
               className="flex items-center justify-center gap-2 text-brand-light hover:text-white py-2"
             >
-              Programación POO
+              Programación
               <span className="bg-brand-primary text-white text-[10px] px-2 py-0.5 rounded-md uppercase tracking-wide">
                 Nuevo
               </span>

@@ -13,7 +13,7 @@ export default function Faq() {
     {
       pregunta: "¿Desde qué edad se pueden tomar las clases?",
       respuesta:
-        "Las clases están adaptadas para alumnos desde los 7 años en adelante. Ajusto la metodología según la edad, construyendo bases sólidas para primaria, secundaria o nivel preuniversitario.",
+        "Las clases están adaptadas para alumnos a partir de los 7 años en adelante. Ajusto la metodología según la edad, construyendo bases sólidas para primaria, secundaria, nivel preuniversitario y universitario.",
     },
     {
       pregunta: "Vivo fuera de Argentina, ¿cómo puedo pagar?",
@@ -27,9 +27,9 @@ export default function Faq() {
     },
     {
       pregunta:
-        "¿Dan preparación para exámenes de ingreso o preuniversitarios?",
+        "¿Se ofrece preparación para exámenes de ingreso o preuniversitarios?",
       respuesta:
-        "Sí. Hacemos entrenamiento intensivo enfocado en los temarios específicos de cada instituto, resolviendo modelos de exámenes para asegurar el nivel necesario.",
+        "Sí. Se hace una preparación intensiva enfocada en los temarios específicos de cada instituto, resolviendo modelos de exámenes para asegurar el nivel necesario.",
     },
     {
       pregunta: "¿Puedo tomar una clase de prueba antes de decidirme?",
