@@ -14,7 +14,7 @@ export default function TemarioTech() {
             </h2>
             <p className="text-gray-400 leading-relaxed">
               Las ingenierías y licenciaturas asumen que ya sabés pensar como
-              programador. En el primer semestre te enfrentan a algoritmia y
+              programador. En el primer semestre te enfrentan con algorítmos y
               matemática discreta, y si no tenés la base lógica, te frustrás.
               Este programa está diseñado para darte la estructura mental que
               exige la universidad, sin importar el lenguaje que uses.
@@ -72,7 +72,14 @@ export default function TemarioTech() {
                 datos elementales (Vectores/Matrices).
               </p>
             </div>
-
+            <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-blue-500/50 transition-colors">
+              <div className="text-blue-500 text-2xl mb-4">{"f(x)"}</div>
+              <h4 className="text-white font-bold mb-2">Matemática Aplicada</h4>
+              <p className="text-gray-400 text-sm">
+                Conexión entre Análisis Matemático/Álgebra y la programación:
+                funciones, vectores y lógica para desarrollo de algoritmos.
+              </p>
+            </div>
             <div className="bg-gray-900 border border-gray-800 rounded-xl p-6 hover:border-blue-500/50 transition-colors">
               <div className="text-blue-500 text-2xl mb-4">{"⚙"}</div>
               <h4 className="text-white font-bold mb-2">Fundamentos de POO</h4>

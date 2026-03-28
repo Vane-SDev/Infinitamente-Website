@@ -26,7 +26,7 @@ export default function Servicios() {
   const servicios = [
     {
       titulo: "Apoyo Escolar Integral",
-      desc: "Transformamos la frustración en confianza. Construimos una base matemática sólida para que los estudiantes desde los 7 años dejen de sufrir la materia y avancen al día.",
+      desc: "Transformo la frustración en confianza. Construyo una base matemática sólida para que mis estudiantes desde los 7 años dejen tenerle miedo a la materia y avancen sin problema.",
       temario: [
         "Operaciones básicas y fracciones",
         "Ecuaciones de primer grado",
@@ -37,7 +37,7 @@ export default function Servicios() {
     },
     {
       titulo: "Física (Secundaria)",
-      desc: "Dejá de memorizar fórmulas sin sentido. Te enseño a interpretar los enunciados, plantear las ecuaciones correctas y entender el fenómeno físico detrás de los números.",
+      desc: "Hay que dejar de memorizar fórmulas sin sentido. Te enseño a interpretar los enunciados, plantear las ecuaciones correctas y entender el fenómeno físico detrás de los números.",
       temario: [
         "Cinemática (MRU, MRUV, Caída libre)",
         "Dinámica y Leyes de Newton",
@@ -48,7 +48,7 @@ export default function Servicios() {
     },
     {
       titulo: "Ingreso a la Universidad",
-      desc: "No dejes tu ingreso al azar. Nivelación intensiva, resolución de exámenes reales y estrategias exactas para superar las pruebas de acceso sin sorpresas.",
+      desc: "No dejés tu ingreso al azar. Nivelación intensiva, resolución de exámenes reales y estrategias exactas para que superemos las pruebas de acceso sin sorpresas.",
       temario: [
         "Álgebra y polinomios",
         "Funciones (lineal, cuadrática, exponencial, etc.)",
@@ -66,7 +66,7 @@ export default function Servicios() {
         "Probabilidad y Estadística",
         "Preparación de trabajos prácticos",
         "Matemática para carreras de software (Lógica, Algoritmos, Complejidad)",
-        "Matemática AVanzada (Ecuaciones Diferenciales, Series, etc.)",
+        "Matemática Avanzada (Ecuaciones Diferenciales, Series, etc.)",
       ],
       ctaTexto: "Destrabar ejercicios",
     },

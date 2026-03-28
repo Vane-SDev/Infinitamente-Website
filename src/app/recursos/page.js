@@ -5,7 +5,7 @@ export default function RecursosIndexPage() {
   const apuntes = [
     {
       id: "fracciones",
-      titulo: "Fracciones: El manual de supervivencia",
+      titulo: "Fracciones: La guía para entenderlas sin fallar en el intento😉",
       descripcion:
         "Entendé las fracciones aplicadas a la vida real: dinero, tecnología y decisiones diarias.",
       ruta: "/recursos/fracciones",
@@ -30,7 +30,7 @@ export default function RecursosIndexPage() {
           </h1>
           <p className="text-xl text-gray-600 max-w-2xl mx-auto">
             Guías prácticas, ejercicios aplicados y estrategias reales para que
-            dejes de machetear y empieces a entender.
+            dejes de memorizar fórmulas y empieces a entenderlas.
           </p>
         </header>
 

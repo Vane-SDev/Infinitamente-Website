@@ -35,7 +35,7 @@ export default function HeroTech() {
             href="/#reserva"
             className="bg-blue-600 hover:bg-blue-500 text-white font-bold py-4 px-8 rounded-xl transition-all duration-300 shadow-[0_0_20px_rgba(37,99,235,0.3)] hover:shadow-[0_0_30px_rgba(37,99,235,0.5)] transform hover:-translate-y-1"
           >
-            Agendar mentoria técnica
+            Agendar una clase de prueba
           </Link>
           <a
             href="#temario-tech"

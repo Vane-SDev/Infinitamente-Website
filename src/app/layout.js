@@ -56,8 +56,8 @@ const schemaMarkup = {
   openingHoursSpecification: {
     "@type": "OpeningHoursSpecification",
     dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
-    opens: "09:00",
-    closes: "20:00",
+    opens: "07:00",
+    closes: "22:00",
   },
   sameAs: ["https://g.page/r/CQOh2Z-tmLQREAE"],
   // (Aggregate Rating) 

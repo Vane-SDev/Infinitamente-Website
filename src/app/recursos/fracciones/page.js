@@ -4,7 +4,7 @@ import data from "../../../data/fracciones.json";
 
 export default function FraccionesPage() {
   const numero = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5492643171733";
-  const mensaje = "Hola Vane, vengo de la web. ¿Me pasás el manual de supervivencia de fracciones?";
+  const mensaje = "Hola Vane, vengo de la web. ¿Me pasás la guía de fracciones?";
   const whatsappUrl = `https://api.whatsapp.com/send?phone=${numero}&text=${encodeURIComponent(mensaje)}`;
 
   return (
@@ -72,7 +72,7 @@ export default function FraccionesPage() {
                 </div>
                 <div className="text-left">
                   <p className="text-brand-morado font-black text-sm leading-tight mb-1">Fracciones:</p>
-                  <p className="text-gray-800 font-bold text-xs leading-tight">El manual de supervivencia</p>
+                  <p className="text-gray-800 font-bold text-xs leading-tight">La guía que necesitas</p>
                 </div>
                 <div className="mt-auto">
                   <div className="w-full h-1 bg-gray-200 rounded mb-1"></div>
