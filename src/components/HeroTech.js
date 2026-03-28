@@ -14,20 +14,21 @@ export default function HeroTech() {
 
       <div className="max-w-4xl text-center space-y-8 z-10 relative mt-10">
         <div className="inline-block py-1 px-4 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 text-sm font-semibold tracking-widest uppercase mb-2">
-          Tecnicaturas • Desarrollo Web • Lógica
+          Tecnicaturas • Ingeniería • Sistemas • Ciencias Exactas
         </div>
 
         <h1 className="text-5xl sm:text-7xl font-extrabold tracking-tight text-white drop-shadow-md">
           Dominá la lógica. <br className="hidden sm:block" />
           <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-brand-primary">
-            Escribí mejor código.
+            Avanzá en tu carrera.
           </span>
         </h1>
 
         <p className="text-lg sm:text-xl text-gray-400 leading-relaxed max-w-2xl mx-auto font-medium">
-          Si te frustra la Programación Orientada a Objetos o no lográs que tus
-          componentes funcionen, el problema no es el lenguaje, es la base
-          lógica. Te enseño a estructurar tu pensamiento.
+          Si te frustran las materias exactas de los primeros años o sentís que
+          te falta base para entender cómo resolver un algoritmo, el problema no
+          es tu capacidad. Te enseño a estructurar tu pensamiento para que
+          apruebes entendiendo.
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4 justify-center pt-8">
