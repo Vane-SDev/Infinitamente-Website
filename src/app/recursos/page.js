@@ -1,4 +1,5 @@
 import Link from "next/link";
+import EjerciciosInteractivos from "@/components/ejercicios/EjerciciosInteractivos";
 
 export default function RecursosIndexPage() {
   // Esta lista simula tu índice. Más adelante, podés automatizar esto para que lea todos los archivos de tu carpeta 'data' directamente.
@@ -33,6 +34,8 @@ export default function RecursosIndexPage() {
             dejes de memorizar fórmulas y empieces a entenderlas.
           </p>
         </header>
+
+        <EjerciciosInteractivos />
 
         {/* Grilla de tarjetas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
