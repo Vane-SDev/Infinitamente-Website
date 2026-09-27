@@ -17,7 +17,7 @@ export default function EntradaPintar({ tipo, ejercicio, valor, onCambiar, onCom
 
   return (
     <form onSubmit={onComprobar} noValidate aria-describedby={terminado ? undefined : ayudaId}>
-      <div className="py-6 px-4 mb-3 rounded-xl bg-gray-50 border border-gray-100">
+      <div className="py-6 px-2 sm:px-4 mb-3 rounded-xl bg-gray-50 border border-gray-100">
         <FiguraFraccion
           grafico={ejercicio.grafico}
           pintadas={valor}

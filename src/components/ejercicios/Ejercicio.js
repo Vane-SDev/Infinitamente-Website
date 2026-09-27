@@ -155,7 +155,7 @@ export default function Ejercicio({ ejercicio }) {
   }
 
   return (
-    <article className="bg-white p-6 sm:p-8 rounded-2xl shadow-sm border border-gray-100">
+    <article className="bg-white p-4 sm:p-8 rounded-2xl shadow-sm border border-gray-100">
       <div className="flex items-center justify-between gap-4 mb-4">
         <span className="inline-block bg-brand-primary/10 text-brand-primary text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
           {ejercicio.tema}
@@ -190,7 +190,7 @@ export default function Ejercicio({ ejercicio }) {
       )}
 
       {(operacion || graficoFijo) && (
-        <div className="py-6 px-4 mb-6 rounded-xl bg-gray-50 border border-gray-100 space-y-6">
+        <div className="py-6 px-2 sm:px-4 mb-6 rounded-xl bg-gray-50 border border-gray-100 space-y-6">
           {operacion && <Expresion texto={operacion} />}
           {graficoFijo && (
             <FiguraFraccion

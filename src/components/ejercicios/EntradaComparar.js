@@ -15,7 +15,7 @@ export default function EntradaComparar({ tipo, ejercicio, valor, onCambiar, onC
 
   return (
     <form onSubmit={onComprobar} noValidate aria-describedby={terminado ? undefined : ayudaId}>
-      <div className="py-6 px-4 mb-4 rounded-xl bg-gray-50 border border-gray-100">
+      <div className="py-6 px-2 sm:px-4 mb-4 rounded-xl bg-gray-50 border border-gray-100">
         <Expresion
           texto={ejercicio.operacion}
           renderCasillero={() => (

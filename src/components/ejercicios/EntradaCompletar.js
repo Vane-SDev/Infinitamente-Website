@@ -1,7 +1,8 @@
 import { useId } from "react";
+import { casillerosDe } from "@/lib/expresion";
 import BotonComprobar from "./BotonComprobar";
 import Casillero from "./Casillero";
-import Expresion, { casillerosDe } from "./Expresion";
+import Expresion from "./Expresion";
 
 // La cuenta con casilleros para completar. Si hay más de un casillero, los
 // que están mal quedan marcados en rojo (sin mostrar el valor correcto).
@@ -16,7 +17,7 @@ export default function EntradaCompletar({ tipo, ejercicio, valor, onCambiar, on
 
   return (
     <form onSubmit={onComprobar} noValidate aria-describedby={terminado ? undefined : ayudaId}>
-      <div className="py-6 px-4 mb-4 rounded-xl bg-gray-50 border border-gray-100">
+      <div className="py-6 px-2 sm:px-4 mb-4 rounded-xl bg-gray-50 border border-gray-100">
         <Expresion
           texto={ejercicio.operacion}
           renderCasillero={(indice) => (

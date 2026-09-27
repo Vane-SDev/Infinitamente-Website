@@ -30,7 +30,7 @@ export default function EntradaPlanteo({ tipo, valor, onCambiar, onComprobar, te
 
   return (
     <form onSubmit={onComprobar} noValidate aria-describedby={ayudaId}>
-      <div className="py-6 px-4 mb-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center gap-3 sm:gap-4">
+      <div className="py-6 px-2 sm:px-4 mb-4 rounded-xl bg-gray-50 border border-gray-100 flex items-center justify-center gap-3 sm:gap-4">
         <FraccionConCasilleros
           fraccion={valor.a}
           onCambiar={(a) => onCambiar({ ...valor, a })}
