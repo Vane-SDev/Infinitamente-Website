@@ -1,17 +1,27 @@
 import {
+  evaluarCasilleros,
   evaluarFraccion,
   evaluarIdentificar,
   evaluarMixta,
   evaluarPintar,
+  evaluarPlanteo,
+  normalizarOperador,
 } from "./fracciones";
 import { totalPartes } from "./figuras";
 
 // Cada tipo de respuesta decide:
-// - entrada: qué ve el alumno para responder ("texto" o "pintar").
-// - valorInicial y evaluar(valor, ejercicio): cómo se corrige.
+// - entrada: qué ve el alumno para responder ("texto", "pintar", "completar"
+//   o "planteo").
+// - valorInicial (o una función que lo arma según el ejercicio) y
+//   evaluar(valor, ejercicio): cómo se corrige.
 // - mostrar(valor, ejercicio): cómo se nombra la respuesta en los mensajes.
 // - mensajesEquivalente: qué decir cuando vale lo mismo pero está mal escrita.
-// - textoCorrecto (opcional): el mensaje de acierto.
+// - textoCorrecto y textoIncorrecto (opcionales): mensajes propios del tipo.
+// - incluyeOperacion / incluyeGrafico (opcionales): la entrada ya muestra la
+//   cuenta o la figura, así que no se dibujan aparte.
+// - pasos (opcional): si el ejercicio se resuelve en varios pasos, una función
+//   que devuelve la lista de pasos, cada uno con los mismos campos que un tipo
+//   más sus pistas. Ver "plantear".
 // Para un tipo nuevo se agrega una entrada acá y el componente Ejercicio no
 // cambia.
 
@@ -88,6 +98,7 @@ const tiposRespuesta = {
 
   pintar: {
     entrada: "pintar",
+    incluyeGrafico: true, // la figura es la entrada, no se muestra aparte
     valorInicial: [],
     evaluar: (pintadas, ejercicio) =>
       evaluarPintar(pintadas.length, totalPartes(ejercicio.grafico), ejercicio.respuesta),
@@ -103,6 +114,67 @@ const tiposRespuesta = {
     },
     mensajesEquivalente: {},
   },
+
+  completar: {
+    entrada: "completar",
+    incluyeOperacion: true, // la cuenta con casilleros es la entrada
+    valorInicial: (ejercicio) =>
+      Array.from(ejercicio.operacion.matchAll(/□/g), () => ""),
+    evaluar: (valores, ejercicio) => evaluarCasilleros(valores, ejercicio.respuesta),
+    mostrar: (valores) => valores.join(", "),
+    textoCorrecto: () => "¡Excelente! Completaste bien la cuenta.",
+    textoIncorrecto: (evaluacion, valores) =>
+      valores.length > 1 && evaluacion.casillerosMal
+        ? "Revisá los casilleros marcados en rojo."
+        : "",
+    ayudaFormato: "Escribí un número entero en cada casillero.",
+    mensajesError: {
+      vacio: "Completá todos los casilleros antes de comprobar.",
+      formato: "En cada casillero va un número entero, sin barras ni letras.",
+    },
+    mensajesEquivalente: {},
+  },
+
+  // Dos pasos: primero armar la cuenta del problema, después resolverla.
+  plantear: {
+    pasos: (ejercicio) => {
+      const { a, operador, b } = ejercicio.planteo;
+      const cuenta = `${a} ${normalizarOperador(operador) === "-" ? "−" : "+"} ${b}`;
+      return [
+        {
+          titulo: "Paso 1: armá la cuenta",
+          entrada: "planteo",
+          valorInicial: { a: { n: "", d: "" }, operador: "", b: { n: "", d: "" } },
+          evaluar: (valor) => evaluarPlanteo(valor, ejercicio.planteo),
+          mostrar: () => "",
+          textoCorrecto: () => "¡Bien planteado! Ahora resolvé la cuenta.",
+          textoAgotado: `Esta vez no salió, pero no pasa nada. La cuenta es ${cuenta}. Ahora resolvela.`,
+          alAgotar: "continuar",
+          pistas: ejercicio.pistasPlanteo,
+          ayudaFormato:
+            "Escribí las dos fracciones del problema y elegí si se suman o se restan.",
+          mensajesError: {
+            vacio: "Completá las dos fracciones y elegí la operación antes de comprobar.",
+            formato: "En cada casillero va un número entero, sin barras ni letras.",
+          },
+          mensajesEquivalente: {},
+        },
+        {
+          ...tiposRespuesta.fraccion,
+          titulo: "Paso 2: resolvé la cuenta",
+          operacion: cuenta,
+          pistas: ejercicio.pistas,
+        },
+      ];
+    },
+  },
 };
+
+// Los pasos de un ejercicio. Los tipos comunes tienen un solo paso.
+export function pasosDelEjercicio(ejercicio) {
+  const tipo = tiposRespuesta[ejercicio.tipoRespuesta];
+  if (tipo.pasos) return tipo.pasos(ejercicio);
+  return [{ ...tipo, pistas: ejercicio.pistas }];
+}
 
 export default tiposRespuesta;

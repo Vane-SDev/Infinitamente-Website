@@ -2,8 +2,10 @@
 
 import { useReducer } from "react";
 import { indicesPintados } from "@/lib/figuras";
-import tiposRespuesta from "@/lib/tiposRespuesta";
+import { pasosDelEjercicio } from "@/lib/tiposRespuesta";
+import EntradaCompletar from "./EntradaCompletar";
 import EntradaPintar from "./EntradaPintar";
+import EntradaPlanteo from "./EntradaPlanteo";
 import EntradaTexto from "./EntradaTexto";
 import Expresion from "./Expresion";
 import FiguraFraccion from "./FiguraFraccion";
@@ -15,30 +17,50 @@ const INTENTOS_POR_DEFECTO = 3;
 const entradas = {
   texto: EntradaTexto,
   pintar: EntradaPintar,
+  completar: EntradaCompletar,
+  planteo: EntradaPlanteo,
 };
 
-function crearEstado(tipo) {
+function valorInicial(paso, ejercicio) {
+  return typeof paso.valorInicial === "function"
+    ? paso.valorInicial(ejercicio)
+    : paso.valorInicial;
+}
+
+function crearEstado({ pasos, ejercicio }) {
   return {
-    valor: tipo.valorInicial, // texto escrito o lista de partes pintadas
-    intentosUsados: 0,
+    paso: 0, // la mayoría de los ejercicios tiene un solo paso
+    valor: valorInicial(pasos[0], ejercicio), // lo que escribió o pintó
+    intentosUsados: 0, // se cuentan por paso
     estado: "respondiendo", // "respondiendo" | "acertado" | "sinIntentos"
     feedback: null, // { tono: "aviso" | "error" | "exito", texto }
+    evaluacion: null, // la última corrección, para marcar casilleros
   };
 }
 
 function reducer(state, action) {
   switch (action.type) {
     case "escribir":
-      return { ...state, valor: action.valor };
+      return { ...state, valor: action.valor, evaluacion: null };
 
     case "responder": {
-      const { evaluacion, tipo, texto, textoCorrecto, pistas, maxIntentos } = action;
+      const { evaluacion, paso, texto, textoCorrecto, valorSiguiente, maxIntentos } = action;
+      const haySiguiente = valorSiguiente !== undefined;
+      const pasarAlSiguiente = (feedback) => ({
+        ...state,
+        paso: state.paso + 1,
+        valor: valorSiguiente,
+        intentosUsados: 0,
+        evaluacion: null,
+        feedback,
+      });
 
-      // Un formato inválido o una fracción sin simplificar no descuentan intento.
+      // Un formato inválido o una respuesta equivalente mal escrita no
+      // descuentan intento.
       if (evaluacion.resultado === "invalido") {
         return {
           ...state,
-          feedback: { tono: "aviso", texto: tipo.mensajesError[evaluacion.error] },
+          feedback: { tono: "aviso", texto: paso.mensajesError[evaluacion.error] },
         };
       }
       if (evaluacion.resultado === "equivalente") {
@@ -46,23 +68,25 @@ function reducer(state, action) {
           ...state,
           feedback: {
             tono: "aviso",
-            texto: tipo.mensajesEquivalente[evaluacion.motivo](texto),
+            texto: paso.mensajesEquivalente[evaluacion.motivo](texto),
           },
         };
       }
       if (evaluacion.resultado === "correcto") {
-        return {
-          ...state,
-          estado: "acertado",
-          feedback: { tono: "exito", texto: textoCorrecto },
-        };
+        const feedback = { tono: "exito", texto: textoCorrecto };
+        if (haySiguiente) return pasarAlSiguiente(feedback);
+        return { ...state, estado: "acertado", evaluacion, feedback };
       }
 
       const intentosUsados = state.intentosUsados + 1;
       if (intentosUsados >= maxIntentos) {
+        if (haySiguiente && paso.alAgotar === "continuar") {
+          return pasarAlSiguiente({ tono: "error", texto: paso.textoAgotado });
+        }
         return {
           ...state,
           intentosUsados,
+          evaluacion,
           estado: "sinIntentos",
           feedback: {
             tono: "error",
@@ -72,13 +96,18 @@ function reducer(state, action) {
       }
 
       const restantes = maxIntentos - intentosUsados;
+      const pista = paso.pistas[intentosUsados - 1];
+      const partes = [
+        "Todavía no.",
+        paso.textoIncorrecto?.(evaluacion, state.valor),
+        `Te ${restantes === 1 ? "queda 1 intento" : `quedan ${restantes} intentos`}.`,
+        pista && `Pista: ${pista}`,
+      ];
       return {
         ...state,
         intentosUsados,
-        feedback: {
-          tono: "error",
-          texto: `Todavía no. Te ${restantes === 1 ? "queda 1 intento" : `quedan ${restantes} intentos`}. Pista: ${pistas[intentosUsados - 1]}`,
-        },
+        evaluacion,
+        feedback: { tono: "error", texto: partes.filter(Boolean).join(" ") },
       };
     }
 
@@ -94,29 +123,31 @@ const estilosFeedback = {
 };
 
 export default function Ejercicio({ ejercicio }) {
-  const tipo = tiposRespuesta[ejercicio.tipoRespuesta];
-  const [state, dispatch] = useReducer(reducer, tipo, crearEstado);
-  const Entrada = entradas[tipo.entrada];
+  const pasos = pasosDelEjercicio(ejercicio);
+  const [state, dispatch] = useReducer(reducer, { pasos, ejercicio }, crearEstado);
+  const paso = pasos[state.paso];
+  const Entrada = entradas[paso.entrada];
   const maxIntentos = ejercicio.intentos ?? INTENTOS_POR_DEFECTO;
   const terminado = state.estado !== "respondiendo";
-  // En "pintar" la figura es la entrada; en los demás tipos se muestra fija.
-  const graficoFijo = ejercicio.grafico && tipo.entrada !== "pintar";
-  const pistasVistas = ejercicio.pistas.slice(
+  const operacion = paso.incluyeOperacion ? null : (paso.operacion ?? ejercicio.operacion);
+  const graficoFijo = ejercicio.grafico && !paso.incluyeGrafico;
+  const pistasVistas = paso.pistas.slice(
     0,
-    Math.min(state.intentosUsados, ejercicio.pistas.length),
+    Math.min(state.intentosUsados, paso.pistas.length),
   );
 
   function handleSubmit(e) {
     e.preventDefault();
-    const texto = tipo.mostrar(state.valor, ejercicio);
+    const texto = paso.mostrar(state.valor, ejercicio);
+    const siguiente = pasos[state.paso + 1];
     dispatch({
       type: "responder",
-      evaluacion: tipo.evaluar(state.valor, ejercicio),
-      tipo,
+      evaluacion: paso.evaluar(state.valor, ejercicio),
+      paso,
       texto,
       textoCorrecto:
-        tipo.textoCorrecto?.(texto, ejercicio) ?? `¡Excelente! ${texto} es correcto.`,
-      pistas: ejercicio.pistas,
+        paso.textoCorrecto?.(texto, ejercicio) ?? `¡Excelente! ${texto} es correcto.`,
+      valorSiguiente: siguiente && valorInicial(siguiente, ejercicio),
       maxIntentos,
     });
   }
@@ -149,9 +180,16 @@ export default function Ejercicio({ ejercicio }) {
         </p>
       )}
 
-      {(ejercicio.operacion || graficoFijo) && (
+      {pasos.length > 1 && (
+        <h3 className="font-bold text-brand-dark text-lg mb-3">
+          {paso.titulo}
+          <span className="sr-only"> (paso {state.paso + 1} de {pasos.length})</span>
+        </h3>
+      )}
+
+      {(operacion || graficoFijo) && (
         <div className="py-6 px-4 mb-6 rounded-xl bg-gray-50 border border-gray-100 space-y-6">
-          {ejercicio.operacion && <Expresion texto={ejercicio.operacion} />}
+          {operacion && <Expresion texto={operacion} />}
           {graficoFijo && (
             <FiguraFraccion
               grafico={ejercicio.grafico}
@@ -162,9 +200,10 @@ export default function Ejercicio({ ejercicio }) {
       )}
 
       <Entrada
-        tipo={tipo}
+        tipo={paso}
         ejercicio={ejercicio}
         valor={state.valor}
+        evaluacion={state.evaluacion}
         onCambiar={(valor) => dispatch({ type: "escribir", valor })}
         onComprobar={handleSubmit}
         terminado={terminado}

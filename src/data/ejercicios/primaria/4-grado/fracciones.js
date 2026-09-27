@@ -4,7 +4,7 @@ const fracciones = {
   slug: "fracciones",
   nombre: "Fracciones",
   descripcion:
-    "Leer y pintar fracciones, números mixtos y sumas y restas con el mismo denominador.",
+    "Leer y pintar fracciones, completar cuentas, plantear problemas y números mixtos.",
   ejercicios: [
     {
       id: "fracciones-primaria-suma-mismo-denominador",
@@ -45,80 +45,186 @@ const fracciones = {
       ],
     },
     {
-      id: "fracciones-4-grado-identificar-grilla",
+      id: "fracciones-4-grado-identificar-chocolate",
       nivel: "primaria",
       tema: "Fracciones",
       contexto:
-        "Sofi pintó algunos cuadraditos de esta grilla. ¿Qué fracción de la grilla está pintada?",
-      grafico: { forma: "grilla", filas: 2, columnas: 4, pintadas: 6 },
+        "Una barra de chocolate tiene 5 cuadraditos iguales. Tomi se comió los que están pintados. ¿Qué fracción de la barra se comió?",
+      grafico: { forma: "barra", partes: 5, pintadas: 2 },
       tipoRespuesta: "identificar",
-      respuesta: "6/8",
+      respuesta: "2/5",
       pistas: [
-        "Contá cuántos cuadraditos hay en total: ese número va abajo, en el denominador.",
-        "Hay 8 cuadraditos en total. Ahora contá los pintados: ese número va arriba, en el numerador.",
+        "Contá en cuántas partes iguales está dividida la barra: ese número va abajo (denominador).",
+        "Ahora contá las partes pintadas: ese número va arriba (numerador).",
       ],
       resolucion: [
-        "La grilla tiene 8 cuadraditos iguales: el denominador es 8.",
-        "Hay 6 cuadraditos pintados: el numerador es 6.",
-        "Está pintado 6/8 de la grilla, que también se puede escribir como 3/4.",
+        "La barra tiene 5 partes → denominador 5.",
+        "Hay 2 pintadas → numerador 2.",
+        "Tomi se comió 2/5.",
       ],
     },
     {
-      id: "fracciones-4-grado-pintar-pizza",
+      id: "fracciones-4-grado-identificar-ruleta",
       nivel: "primaria",
       tema: "Fracciones",
       contexto:
-        "Una pizza está cortada en 8 porciones iguales. Pintá 3/4 de la pizza.",
+        "Esta ruleta está dividida en 6 partes iguales. ¿Qué fracción está pintada?",
+      grafico: { forma: "circulo", partes: 6, pintadas: 5 },
+      tipoRespuesta: "identificar",
+      respuesta: "5/6",
+      pistas: [
+        "El denominador es la cantidad total de partes iguales.",
+        "Contá las partes pintadas: son el numerador.",
+      ],
+      resolucion: [
+        "Hay 6 partes en total y 5 pintadas: 5/6.",
+      ],
+    },
+    {
+      id: "fracciones-4-grado-pintar-libro",
+      nivel: "primaria",
+      tema: "Fracciones",
+      contexto:
+        "Martina ya leyó 3/4 de su libro. Pintá la parte que leyó.",
       operacion: "3/4",
-      grafico: { forma: "circulo", partes: 8 },
+      grafico: { forma: "barra", partes: 4 },
       tipoRespuesta: "pintar",
       respuesta: "3/4",
       pistas: [
-        "Imaginá la pizza partida en 4 partes iguales. ¿Cuántas porciones entran en cada cuarto?",
-        "Cada cuarto son 2 porciones. 3/4 son 3 de esos cuartos.",
+        "El denominador 4 te dice en cuántas partes está dividida la barra.",
+        "El numerador 3 te dice cuántas partes tenés que pintar.",
       ],
       resolucion: [
-        "La pizza tiene 8 porciones, así que cada cuarto son 8 ÷ 4 = 2 porciones.",
-        "3/4 son 3 cuartos: 3 × 2 = 6 porciones.",
-        "Pintamos 6 de 8 porciones: 6/8 es lo mismo que 3/4.",
+        "La barra tiene 4 partes y pintamos 3.",
       ],
     },
     {
-      id: "fracciones-4-grado-mixta-a-impropia",
+      id: "fracciones-4-grado-pintar-mitad-grilla",
       nivel: "primaria",
       tema: "Fracciones",
       contexto:
-        "En el cumple sobraron 2 1/2 pizzas. ¿Cuántas medias pizzas son? Escribilo como una sola fracción.",
-      operacion: "2 1/2",
-      tipoRespuesta: "fraccion",
-      respuesta: "5/2",
+        "Pintá la mitad (1/2) de la grilla.",
+      operacion: "1/2",
+      grafico: { forma: "grilla", filas: 2, columnas: 5 },
+      tipoRespuesta: "pintar",
+      respuesta: "1/2",
       pistas: [
-        "Cada pizza entera tiene 2 medios. ¿Cuántos medios hay en 2 pizzas?",
-        "En 2 pizzas hay 4 medios. Sumale el medio que sobra.",
+        "La mitad es partir en 2 grupos iguales. ¿Cuántas partes tiene la grilla en total?",
+        "La grilla tiene 10 partes. ¿Cuánto es la mitad de 10?",
       ],
       resolucion: [
-        "Cada pizza entera tiene 2 medios: en 2 pizzas hay 2 × 2 = 4 medios.",
-        "Le sumamos el medio que sobra: 4 + 1 = 5 medios.",
-        "Resultado: 5/2.",
+        "10 partes ÷ 2 = 5.",
+        "Pintamos 5 de 10, que es 5/10 = 1/2.",
       ],
     },
     {
-      id: "fracciones-4-grado-impropia-a-mixta",
+      id: "fracciones-4-grado-completar-suma",
       nivel: "primaria",
       tema: "Fracciones",
       contexto:
-        "Para una torta se usaron 7/4 de taza de azúcar. Escribí esa cantidad como número mixto.",
-      operacion: "7/4",
+        "Completá el casillero para que la cuenta dé bien.",
+      operacion: "□/8 + 3/8 = 7/8",
+      tipoRespuesta: "completar",
+      respuesta: ["4"],
+      pistas: [
+        "Los denominadores son iguales: solo se suman los numeradores.",
+        "¿Qué número sumado a 3 da 7?",
+      ],
+      resolucion: [
+        "4 + 3 = 7, entonces 4/8 + 3/8 = 7/8.",
+      ],
+    },
+    {
+      id: "fracciones-4-grado-completar-resta",
+      nivel: "primaria",
+      tema: "Fracciones",
+      contexto:
+        "Completá el casillero para que la cuenta dé bien.",
+      operacion: "5/6 − □/6 = 2/6",
+      tipoRespuesta: "completar",
+      respuesta: ["3"],
+      pistas: [
+        "Con igual denominador, se restan solo los numeradores.",
+        "¿Qué número le restás a 5 para que quede 2?",
+      ],
+      resolucion: [
+        "5 − 3 = 2, entonces 5/6 − 3/6 = 2/6.",
+      ],
+    },
+    {
+      id: "fracciones-4-grado-plantear-leche",
+      nivel: "primaria",
+      tema: "Fracciones",
+      contexto:
+        "Sofi tomó 2/8 de la botella de leche a la mañana y 3/8 a la tarde. ¿Qué parte de la botella tomó en total?",
+      tipoRespuesta: "plantear",
+      planteo: { a: "2/8", operador: "+", b: "3/8" },
+      respuesta: "5/8",
+      pistasPlanteo: [
+        "“En total” nos dice que hay que juntar las dos partes. ¿Qué operación junta cantidades?",
+        "Fijate qué dos fracciones aparecen en el problema: esas van en los casilleros.",
+      ],
+      pistas: [
+        "Los denominadores son iguales: sumá solo los numeradores.",
+        "2 + 3 = ?",
+      ],
+      resolucion: [
+        "2/8 + 3/8 = 5/8 de la botella.",
+      ],
+    },
+    {
+      id: "fracciones-4-grado-plantear-jugo",
+      nivel: "primaria",
+      tema: "Fracciones",
+      contexto:
+        "Una jarra tenía 7/10 de litro de jugo. Se sirvieron 4/10 de litro. ¿Cuánto jugo quedó?",
+      tipoRespuesta: "plantear",
+      planteo: { a: "7/10", operador: "-", b: "4/10" },
+      respuesta: "3/10",
+      pistasPlanteo: [
+        "“Quedó” nos dice que se sacó una parte. ¿Qué operación usamos para sacar?",
+        "Fijate qué dos fracciones aparecen en el problema: primero va lo que había y después lo que se sacó.",
+      ],
+      pistas: [
+        "Restá solo los numeradores: 7 − 4.",
+        "El denominador queda igual: 10.",
+      ],
+      resolucion: [
+        "7/10 − 4/10 = 3/10 de litro.",
+      ],
+    },
+    {
+      id: "fracciones-4-grado-completar-mixto",
+      nivel: "primaria",
+      tema: "Fracciones",
+      contexto:
+        "Completá el casillero para que la cuenta dé bien.",
+      operacion: "1 2/5 = □/5",
+      tipoRespuesta: "completar",
+      respuesta: ["7"],
+      pistas: [
+        "Un entero, en quintos, son 5/5.",
+        "Sumá los 5 quintos del entero con los 2 quintos que ya tenés.",
+      ],
+      resolucion: [
+        "1 = 5/5, y 5/5 + 2/5 = 7/5.",
+      ],
+    },
+    {
+      id: "fracciones-4-grado-impropia-a-mixta-pan",
+      nivel: "primaria",
+      tema: "Fracciones",
+      contexto:
+        "En la panadería pesaron 11/4 kilos de pan. ¿Cuántos kilos enteros son y cuánto sobra? Escribilo como número mixto.",
+      operacion: "11/4",
       tipoRespuesta: "mixta",
-      respuesta: "1 3/4",
+      respuesta: "2 3/4",
       pistas: [
-        "Con 4 cuartos se forma una taza entera. ¿Cuántas tazas enteras armás con 7 cuartos?",
-        "Con 7 cuartos armás 1 taza entera (4 cuartos) y te sobran 3 cuartos.",
+        "Cada kilo entero son 4/4. ¿Cuántas veces entra 4 en 11?",
+        "4 entra 2 veces en 11 (2 × 4 = 8) y sobran 3 cuartos.",
       ],
       resolucion: [
-        "Dividimos 7 ÷ 4: entra 1 vez y sobran 3.",
-        "El 1 es la parte entera y los 3 que sobran son cuartos: 3/4.",
-        "Resultado: 1 3/4 tazas.",
+        "11 ÷ 4 = 2 y sobran 3, así que 11/4 = 2 3/4 kilos.",
       ],
     },
   ],

@@ -170,3 +170,50 @@ export function evaluarPintar(cantidadPintadas, totalPartes, respuestaEsperada) 
     ? { resultado: "correcto" }
     : { resultado: "incorrecto" };
 }
+
+// Completar casilleros (□) con números enteros. Si hay errores, devuelve qué
+// casilleros están mal (sus posiciones), sin decir el valor correcto.
+export function evaluarCasilleros(valores, esperados) {
+  const limpios = valores.map((v) => v.trim().replace(/[−–]/g, "-"));
+  if (limpios.some((v) => v === "")) return { resultado: "invalido", error: "vacio" };
+  if (limpios.some((v) => !/^-?\d+$/.test(v))) {
+    return { resultado: "invalido", error: "formato" };
+  }
+
+  const casillerosMal = limpios
+    .map((v, i) => (Number(v) === Number(esperados[i]) ? null : i))
+    .filter((i) => i !== null);
+  return casillerosMal.length === 0
+    ? { resultado: "correcto" }
+    : { resultado: "incorrecto", casillerosMal };
+}
+
+// Normaliza el signo de la operación: "−" y "-" son lo mismo.
+export function normalizarOperador(operador) {
+  return operador.replace(/[−–]/g, "-");
+}
+
+// Plantear la cuenta de un problema: valor = { a: { n, d }, operador, b: { n, d } }
+// y planteo = { a: "2/8", operador: "+", b: "3/8" }. Se piden las fracciones tal
+// como aparecen en el problema. En la suma vale el orden invertido (3/8 + 2/8);
+// en la resta no, porque cambia el resultado.
+export function evaluarPlanteo(valor, planteo) {
+  const numeros = [valor.a.n, valor.a.d, valor.b.n, valor.b.d].map((v) => v.trim());
+  if (numeros.some((v) => v === "") || valor.operador === "") {
+    return { resultado: "invalido", error: "vacio" };
+  }
+  if (numeros.some((v) => !/^\d+$/.test(v))) {
+    return { resultado: "invalido", error: "formato" };
+  }
+
+  const escrita = (fraccion) => `${Number(fraccion.n)}/${Number(fraccion.d)}`;
+  const a = escrita(valor.a);
+  const b = escrita(valor.b);
+  const operador = normalizarOperador(planteo.operador);
+
+  if (normalizarOperador(valor.operador) !== operador) return { resultado: "incorrecto" };
+
+  const enOrden = a === planteo.a && b === planteo.b;
+  const invertida = operador === "+" && a === planteo.b && b === planteo.a;
+  return enOrden || invertida ? { resultado: "correcto" } : { resultado: "incorrecto" };
+}
