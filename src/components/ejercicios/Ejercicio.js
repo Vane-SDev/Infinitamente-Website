@@ -1,18 +1,30 @@
 "use client";
 
-import { useId, useReducer } from "react";
+import { useReducer } from "react";
+import { indicesPintados } from "@/lib/figuras";
 import tiposRespuesta from "@/lib/tiposRespuesta";
+import EntradaPintar from "./EntradaPintar";
+import EntradaTexto from "./EntradaTexto";
 import Expresion from "./Expresion";
+import FiguraFraccion from "./FiguraFraccion";
 import ResultadoCTA from "./ResultadoCTA";
 
 const INTENTOS_POR_DEFECTO = 3;
 
-const estadoInicial = {
-  valor: "",
-  intentosUsados: 0,
-  estado: "respondiendo", // "respondiendo" | "acertado" | "sinIntentos"
-  feedback: null, // { tono: "aviso" | "error" | "exito", texto }
+// El tipo de respuesta elige cuál de estas entradas se muestra.
+const entradas = {
+  texto: EntradaTexto,
+  pintar: EntradaPintar,
 };
+
+function crearEstado(tipo) {
+  return {
+    valor: tipo.valorInicial, // texto escrito o lista de partes pintadas
+    intentosUsados: 0,
+    estado: "respondiendo", // "respondiendo" | "acertado" | "sinIntentos"
+    feedback: null, // { tono: "aviso" | "error" | "exito", texto }
+  };
+}
 
 function reducer(state, action) {
   switch (action.type) {
@@ -20,8 +32,7 @@ function reducer(state, action) {
       return { ...state, valor: action.valor };
 
     case "responder": {
-      const { evaluacion, tipo, pistas, maxIntentos } = action;
-      const valor = state.valor.trim();
+      const { evaluacion, tipo, texto, textoCorrecto, pistas, maxIntentos } = action;
 
       // Un formato inválido o una fracción sin simplificar no descuentan intento.
       if (evaluacion.resultado === "invalido") {
@@ -35,7 +46,7 @@ function reducer(state, action) {
           ...state,
           feedback: {
             tono: "aviso",
-            texto: `¡Vas bien! ${valor} es equivalente al resultado. ¿Se puede simplificar? Escribila en su forma más simple.`,
+            texto: tipo.mensajesEquivalente[evaluacion.motivo](texto),
           },
         };
       }
@@ -43,7 +54,7 @@ function reducer(state, action) {
         return {
           ...state,
           estado: "acertado",
-          feedback: { tono: "exito", texto: `¡Excelente! ${valor} es correcto.` },
+          feedback: { tono: "exito", texto: textoCorrecto },
         };
       }
 
@@ -83,13 +94,13 @@ const estilosFeedback = {
 };
 
 export default function Ejercicio({ ejercicio }) {
-  const [state, dispatch] = useReducer(reducer, estadoInicial);
-  const inputId = useId();
-  const ayudaId = useId();
-
   const tipo = tiposRespuesta[ejercicio.tipoRespuesta];
+  const [state, dispatch] = useReducer(reducer, tipo, crearEstado);
+  const Entrada = entradas[tipo.entrada];
   const maxIntentos = ejercicio.intentos ?? INTENTOS_POR_DEFECTO;
   const terminado = state.estado !== "respondiendo";
+  // En "pintar" la figura es la entrada; en los demás tipos se muestra fija.
+  const graficoFijo = ejercicio.grafico && tipo.entrada !== "pintar";
   const pistasVistas = ejercicio.pistas.slice(
     0,
     Math.min(state.intentosUsados, ejercicio.pistas.length),
@@ -97,10 +108,14 @@ export default function Ejercicio({ ejercicio }) {
 
   function handleSubmit(e) {
     e.preventDefault();
+    const texto = tipo.mostrar(state.valor, ejercicio);
     dispatch({
       type: "responder",
-      evaluacion: tipo.evaluar(state.valor, ejercicio.respuesta),
+      evaluacion: tipo.evaluar(state.valor, ejercicio),
       tipo,
+      texto,
+      textoCorrecto:
+        tipo.textoCorrecto?.(texto, ejercicio) ?? `¡Excelente! ${texto} es correcto.`,
       pistas: ejercicio.pistas,
       maxIntentos,
     });
@@ -134,41 +149,26 @@ export default function Ejercicio({ ejercicio }) {
         </p>
       )}
 
-      <div className="py-6 mb-6 rounded-xl bg-gray-50 border border-gray-100">
-        <Expresion texto={ejercicio.operacion} />
-      </div>
+      {(ejercicio.operacion || graficoFijo) && (
+        <div className="py-6 px-4 mb-6 rounded-xl bg-gray-50 border border-gray-100 space-y-6">
+          {ejercicio.operacion && <Expresion texto={ejercicio.operacion} />}
+          {graficoFijo && (
+            <FiguraFraccion
+              grafico={ejercicio.grafico}
+              pintadas={indicesPintados(ejercicio.grafico)}
+            />
+          )}
+        </div>
+      )}
 
-      {!terminado && (
-        <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3" noValidate>
-          <label htmlFor={inputId} className="sr-only">
-            Tu respuesta
-          </label>
-          <input
-            id={inputId}
-            type="text"
-            inputMode="text"
-            autoComplete="off"
-            autoCapitalize="off"
-            spellCheck={false}
-            placeholder={tipo.placeholder}
-            aria-describedby={ayudaId}
-            value={state.valor}
-            onChange={(e) => dispatch({ type: "escribir", valor: e.target.value })}
-            className="flex-1 min-w-0 text-xl text-center sm:text-left text-brand-dark font-semibold px-4 py-3 rounded-xl border-2 border-gray-200 focus:border-brand-primary focus:outline-none focus:ring-4 focus:ring-brand-primary/20 transition-colors"
-          />
-          <button
-            type="submit"
-            className="bg-brand-dark hover:bg-brand-primary text-white font-bold py-3 px-8 rounded-xl transition-colors"
-          >
-            Comprobar
-          </button>
-        </form>
-      )}
-      {!terminado && (
-        <p id={ayudaId} className="text-sm text-gray-500 mt-2">
-          {tipo.ayudaFormato}
-        </p>
-      )}
+      <Entrada
+        tipo={tipo}
+        ejercicio={ejercicio}
+        valor={state.valor}
+        onCambiar={(valor) => dispatch({ type: "escribir", valor })}
+        onComprobar={handleSubmit}
+        terminado={terminado}
+      />
 
       <div aria-live="polite" role="status">
         {state.feedback && (
