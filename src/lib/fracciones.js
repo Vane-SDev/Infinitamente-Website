@@ -188,10 +188,14 @@ export function evaluarCasilleros(valores, esperados) {
     : { resultado: "incorrecto", casillerosMal };
 }
 
-// Normaliza el signo de la operación: "−" y "-" son lo mismo.
+// Normaliza el signo de la operación: "−" y "-" son lo mismo, y también
+// "x" o "*" para multiplicar y "/" o ":" para dividir.
 export function normalizarOperador(operador) {
-  return operador.replace(/[−–]/g, "-");
+  return { "−": "-", "–": "-", x: "×", "*": "×", "/": "÷", ":": "÷" }[operador] ?? operador;
 }
+
+// Operaciones en las que el orden no cambia el resultado.
+const CONMUTATIVAS = ["+", "×"];
 
 // Plantear la cuenta de un problema: valor = { a: { n, d }, operador, b: { n, d } }
 // y planteo = { a: "2/8", operador: "+", b: "3/8" }. Se piden las fracciones tal
@@ -214,6 +218,12 @@ export function evaluarPlanteo(valor, planteo) {
   if (normalizarOperador(valor.operador) !== operador) return { resultado: "incorrecto" };
 
   const enOrden = a === planteo.a && b === planteo.b;
-  const invertida = operador === "+" && a === planteo.b && b === planteo.a;
+  const invertida = CONMUTATIVAS.includes(operador) && a === planteo.b && b === planteo.a;
   return enOrden || invertida ? { resultado: "correcto" } : { resultado: "incorrecto" };
+}
+
+// Comparar dos fracciones eligiendo "<", "=" o ">".
+export function evaluarComparacion(signo, respuestaEsperada) {
+  if (signo === "") return { resultado: "invalido", error: "vacio" };
+  return signo === respuestaEsperada ? { resultado: "correcto" } : { resultado: "incorrecto" };
 }

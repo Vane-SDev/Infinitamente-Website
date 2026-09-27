@@ -3,6 +3,7 @@
 import { useReducer } from "react";
 import { indicesPintados } from "@/lib/figuras";
 import { pasosDelEjercicio } from "@/lib/tiposRespuesta";
+import EntradaComparar from "./EntradaComparar";
 import EntradaCompletar from "./EntradaCompletar";
 import EntradaPintar from "./EntradaPintar";
 import EntradaPlanteo from "./EntradaPlanteo";
@@ -19,6 +20,7 @@ const entradas = {
   pintar: EntradaPintar,
   completar: EntradaCompletar,
   planteo: EntradaPlanteo,
+  comparar: EntradaComparar,
 };
 
 function valorInicial(paso, ejercicio) {

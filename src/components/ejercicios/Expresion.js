@@ -7,7 +7,9 @@
 // Un número puede ser un casillero. Cada pedazo es un mixto (entero +
 // fracción), una fracción o cualquier otra cosa sin espacios (números, signos).
 const N = "(?:\\d+|□)";
-const PEDAZOS = new RegExp(`(-?${N})\\s+(${N})\\/(${N})|(-?${N})\\/(${N})|\\S+`, "g");
+// El entero de un mixto no puede ser un casillero: así "□ 3/4" es un casillero
+// seguido de una fracción (como en "2/3 □ 3/4" para comparar).
+const PEDAZOS = new RegExp(`(-?\\d+)\\s+(${N})\\/(${N})|(-?${N})\\/(${N})|\\S+`, "g");
 
 // Lista de casilleros en el orden en que aparecen, con su nombre para el
 // lector de pantalla. La usan Expresion y la entrada "completar".

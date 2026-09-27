@@ -1,5 +1,6 @@
 import {
   evaluarCasilleros,
+  evaluarComparacion,
   evaluarFraccion,
   evaluarIdentificar,
   evaluarMixta,
@@ -10,8 +11,8 @@ import {
 import { totalPartes } from "./figuras";
 
 // Cada tipo de respuesta decide:
-// - entrada: qué ve el alumno para responder ("texto", "pintar", "completar"
-//   o "planteo").
+// - entrada: qué ve el alumno para responder ("texto", "pintar", "completar",
+//   "comparar" o "planteo").
 // - valorInicial (o una función que lo arma según el ejercicio) y
 //   evaluar(valor, ejercicio): cómo se corrige.
 // - mostrar(valor, ejercicio): cómo se nombra la respuesta en los mensajes.
@@ -135,15 +136,32 @@ const tiposRespuesta = {
     mensajesEquivalente: {},
   },
 
+  comparar: {
+    entrada: "comparar",
+    incluyeOperacion: true, // las fracciones con el casillero son la entrada
+    valorInicial: "",
+    evaluar: (signo, ejercicio) => evaluarComparacion(signo, ejercicio.respuesta),
+    mostrar: (signo, ejercicio) => ejercicio.operacion.replace("□", signo),
+    textoCorrecto: (texto) => `¡Excelente! ${texto}.`,
+    ayudaFormato: "Elegí el signo que va en el casillero y tocá Comprobar.",
+    mensajesError: {
+      vacio: "Elegí un signo antes de comprobar.",
+    },
+    mensajesEquivalente: {},
+  },
+
   // Dos pasos: primero armar la cuenta del problema, después resolverla.
+  // Las operaciones del menú salen de planteo.operadores (por defecto + y −).
   plantear: {
     pasos: (ejercicio) => {
-      const { a, operador, b } = ejercicio.planteo;
-      const cuenta = `${a} ${normalizarOperador(operador) === "-" ? "−" : "+"} ${b}`;
+      const { a, operador, b, operadores = ["+", "-"] } = ejercicio.planteo;
+      const signo = normalizarOperador(operador);
+      const cuenta = `${a} ${signo === "-" ? "−" : signo} ${b}`;
       return [
         {
           titulo: "Paso 1: armá la cuenta",
           entrada: "planteo",
+          operadores,
           valorInicial: { a: { n: "", d: "" }, operador: "", b: { n: "", d: "" } },
           evaluar: (valor) => evaluarPlanteo(valor, ejercicio.planteo),
           mostrar: () => "",
@@ -152,7 +170,7 @@ const tiposRespuesta = {
           alAgotar: "continuar",
           pistas: ejercicio.pistasPlanteo,
           ayudaFormato:
-            "Escribí las dos fracciones del problema y elegí si se suman o se restan.",
+            "Escribí las dos fracciones del problema y elegí la operación.",
           mensajesError: {
             vacio: "Completá las dos fracciones y elegí la operación antes de comprobar.",
             formato: "En cada casillero va un número entero, sin barras ni letras.",

@@ -20,7 +20,10 @@ function FraccionConCasilleros({ fraccion, onCambiar, nombre }) {
   );
 }
 
-// Armar la cuenta del problema: □/□ [+ o −] □/□.
+const NOMBRES = { "+": "+", "-": "−", "×": "×", "÷": "÷" };
+
+// Armar la cuenta del problema: □/□ [operación] □/□. Las operaciones del
+// menú las define el paso (tipo.operadores).
 export default function EntradaPlanteo({ tipo, valor, onCambiar, onComprobar, terminado }) {
   const ayudaId = useId();
   if (terminado) return null;
@@ -40,8 +43,11 @@ export default function EntradaPlanteo({ tipo, valor, onCambiar, onComprobar, te
           className="h-12 sm:h-14 px-2 text-2xl sm:text-3xl font-bold text-brand-primary bg-white rounded-lg border-2 border-brand-light focus:border-brand-primary focus:outline-none focus:ring-4 focus:ring-brand-primary/20"
         >
           <option value="">?</option>
-          <option value="+">+</option>
-          <option value="-">−</option>
+          {tipo.operadores.map((operador) => (
+            <option key={operador} value={operador}>
+              {NOMBRES[operador]}
+            </option>
+          ))}
         </select>
         <FraccionConCasilleros
           fraccion={valor.b}
