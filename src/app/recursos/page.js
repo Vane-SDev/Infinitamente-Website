@@ -1,5 +1,4 @@
 import Link from "next/link";
-import EjerciciosInteractivos from "@/components/ejercicios/EjerciciosInteractivos";
 
 export default function RecursosIndexPage() {
   // Esta lista simula tu índice. Más adelante, podés automatizar esto para que lea todos los archivos de tu carpeta 'data' directamente.
@@ -35,7 +34,24 @@ export default function RecursosIndexPage() {
           </p>
         </header>
 
-        <EjerciciosInteractivos />
+        {/* Banner a los ejercicios interactivos */}
+        <Link
+          href="/ejercicios"
+          className="group mb-16 flex flex-col sm:flex-row sm:items-center justify-between gap-6 bg-brand-dark p-8 rounded-2xl shadow-sm hover:shadow-xl border border-brand-primary/30 transition-all duration-300"
+        >
+          <div>
+            <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+              Practicá con ejercicios interactivos
+            </h2>
+            <p className="text-brand-light leading-relaxed">
+              Para primaria y secundaria. Resolvé y, si te trabás, te doy una
+              pista.
+            </p>
+          </div>
+          <span className="shrink-0 inline-flex items-center justify-center bg-brand-primary group-hover:bg-purple-600 text-white font-bold py-3 px-6 rounded-xl transition-colors">
+            Ir a los ejercicios <span className="ml-2 text-xl">→</span>
+          </span>
+        </Link>
 
         {/* Grilla de tarjetas */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">

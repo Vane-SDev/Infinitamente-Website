@@ -1,5 +1,22 @@
+import { getTemas, nivelesDisponibles } from "@/data/ejercicios";
+
 export default function sitemap() {
   const baseUrl = "https://infinitamentematematico.com";
+
+  const paginasEjercicios = nivelesDisponibles.flatMap((nivel) => [
+    {
+      url: `${baseUrl}/ejercicios/${nivel.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    },
+    ...getTemas(nivel.slug).map((tema) => ({
+      url: `${baseUrl}/ejercicios/${nivel.slug}/${tema.slug}`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.8,
+    })),
+  ]);
 
   return [
     {
@@ -20,6 +37,13 @@ export default function sitemap() {
       changeFrequency: 'monthly',
       priority: 0.8,
     },
+    {
+      url: `${baseUrl}/ejercicios`,
+      lastModified: new Date(),
+      changeFrequency: 'weekly',
+      priority: 0.9,
+    },
+    ...paginasEjercicios,
     
     {
       url: `${baseUrl}/programacion`,
