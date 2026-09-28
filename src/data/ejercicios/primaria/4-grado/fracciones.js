@@ -211,6 +211,25 @@ const fracciones = {
       ],
     },
     {
+      id: "fracciones-4-grado-dividir-torta",
+      nivel: "primaria",
+      tema: "Fracciones",
+      contexto:
+        "Quedaron 4/5 de una torta y se reparten en partes iguales entre 2 amigos. ¿Qué parte de la torta le toca a cada uno?",
+      operacion: "4/5 ÷ 2",
+      tipoRespuesta: "fraccion",
+      respuesta: "2/5",
+      pistas: [
+        "Escribí el 2 como fracción: 2 = 2/1. Ahora dividí 4/5 ÷ 2/1 multiplicando en cruz.",
+        "Arriba va 4 × 1 y abajo 5 × 2. Después fijate si podés simplificar.",
+      ],
+      resolucion: [
+        "El 2 como fracción es 2/1.",
+        "Multiplicamos en cruz: arriba 4 × 1 = 4 y abajo 5 × 2 = 10, así que da 4/10.",
+        "4 y 10 se pueden dividir por 2: 4/10 = 2/5 de torta para cada uno.",
+      ],
+    },
+    {
       id: "fracciones-4-grado-plantear-jugo",
       nivel: "primaria",
       tema: "Fracciones",
