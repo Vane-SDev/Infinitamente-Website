@@ -3,6 +3,7 @@ import fracciones4Grado from "./primaria/4-grado/fracciones";
 import fracciones5Grado from "./primaria/5-grado/fracciones";
 import fracciones6Grado from "./primaria/6-grado/fracciones";
 import fracciones1Anio from "./secundaria/1-anio/fracciones";
+import fracciones2Anio from "./secundaria/2-anio/fracciones";
 
 // Para sumar un tema: crear el archivo en la carpeta del curso
 // (ej: primaria/4-grado/decimales.js) y agregarlo a la lista de ese curso acá.
@@ -12,6 +13,7 @@ const temasPorCurso = {
   "primaria/5-grado": [fracciones5Grado],
   "primaria/6-grado": [fracciones6Grado],
   "secundaria/1-anio": [fracciones1Anio],
+  "secundaria/2-anio": [fracciones2Anio],
 };
 
 export { niveles, nivelesDisponibles };
