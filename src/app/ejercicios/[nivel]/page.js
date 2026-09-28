@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import MigasEjercicios from "@/components/ejercicios/MigasEjercicios";
+import TablaEquivalencias from "@/components/ejercicios/TablaEquivalencias";
 import { getCursos, getNivel, nivelesDisponibles } from "@/data/ejercicios";
 
 // Le dice a Next qué niveles existen para generar sus páginas en el build.
@@ -82,6 +83,8 @@ export default async function NivelPage({ params }) {
             ),
           )}
         </div>
+
+        {nivel.slug === "secundaria" && <TablaEquivalencias />}
       </div>
     </div>
   );
