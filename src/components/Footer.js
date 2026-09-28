@@ -109,7 +109,7 @@ export default function Footer() {
         <p>
           Desarrollado por{" "}
           <a
-            href="https://vswebdesign.online"
+            href="https://vsweb.dev"
             target="_blank"
             rel="noopener noreferrer"
             className="text-gray-300 hover:text-white transition-colors font-semibold z-10 relative"
