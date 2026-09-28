@@ -2,10 +2,30 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
+
+// Los ejercicios avisan con este evento cuando termina uno (acierto o sin
+// intentos) y cuando empieza el siguiente.
+export const EVENTO_WHATSAPP = "whatsapp:visible";
 
 export default function BotonWhatsApp() {
   // Estado para controlar si la burbuja se ve o no
   const [mostrarBurbuja, setMostrarBurbuja] = useState(false);
+  // En celular el botón tapa los ejercicios: ahí se oculta mientras el alumno
+  // responde y aparece recién cuando termina el ejercicio.
+  const enEjercicio = usePathname().split("/").filter(Boolean).length === 4;
+  const [ejercicioTerminado, setEjercicioTerminado] = useState(false);
+  const oculto = enEjercicio && !ejercicioTerminado;
+
+  useEffect(() => {
+    const escuchar = (e) => {
+      setEjercicioTerminado(e.detail);
+      // Al terminar un ejercicio, la burbuja saluda enseguida
+      if (e.detail) setMostrarBurbuja(true);
+    };
+    window.addEventListener(EVENTO_WHATSAPP, escuchar);
+    return () => window.removeEventListener(EVENTO_WHATSAPP, escuchar);
+  }, []);
 
   
   const numero = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || "5492643171733";
@@ -35,7 +55,11 @@ export default function BotonWhatsApp() {
   }, []);
 
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 pointer-events-none">
+    <div
+      className={`fixed bottom-6 right-6 z-50 flex flex-col items-end gap-3 pointer-events-none transition-all duration-500 ${
+        oculto ? "max-md:opacity-0 max-md:translate-y-24 max-md:invisible" : ""
+      }`}
+    >
       
       <div className={`bg-white text-gray-800 text-sm sm:text-base font-semibold py-3 px-5 rounded-2xl rounded-br-none shadow-xl border border-gray-100 transform transition-all duration-500 ease-in-out origin-bottom-right ${
           mostrarBurbuja
