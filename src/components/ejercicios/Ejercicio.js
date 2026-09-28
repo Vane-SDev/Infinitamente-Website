@@ -1,8 +1,9 @@
 "use client";
 
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { indicesPintados } from "@/lib/figuras";
 import { pasosDelEjercicio } from "@/lib/tiposRespuesta";
+import { EVENTO_WHATSAPP } from "../BotonWhatsApp";
 import EntradaComparar from "./EntradaComparar";
 import EntradaCompletar from "./EntradaCompletar";
 import EntradaPintar from "./EntradaPintar";
@@ -145,6 +146,14 @@ export default function Ejercicio({ ejercicio }) {
     0,
     Math.min(state.intentosUsados, paso.pistas.length),
   );
+
+  // Avisa al botón de WhatsApp que puede aparecer (o esconderse de nuevo).
+  useEffect(() => {
+    const avisar = (visible) =>
+      window.dispatchEvent(new CustomEvent(EVENTO_WHATSAPP, { detail: visible }));
+    avisar(terminado);
+    return () => avisar(false);
+  }, [terminado]);
 
   function handleSubmit(e) {
     e.preventDefault();
