@@ -4,6 +4,7 @@ import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { nivelesDisponibles } from "@/data/ejercicios/niveles";
 
 export default function Navbar() {
   const [menuAbierto, setMenuAbierto] = useState(false);
@@ -101,6 +102,46 @@ export default function Navbar() {
               </span>
             </Link>
           </li>
+          <li className="relative group">
+            <Link
+              href="/ejercicios"
+              className="flex items-center gap-1 hover:text-white transition-colors"
+            >
+              Ejercicios
+              <svg
+                className="w-4 h-4 transition-transform group-hover:rotate-180 group-focus-within:rotate-180"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+                aria-hidden="true"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 9l-7 7-7-7"
+                />
+              </svg>
+            </Link>
+            {/* Submenú de niveles: se abre con hover o al navegar con teclado */}
+            <div className="absolute left-1/2 -translate-x-1/2 top-full pt-3 hidden group-hover:block group-focus-within:block">
+              <ul className="bg-brand-dark border border-brand-primary/30 rounded-lg shadow-xl py-2 min-w-44">
+                {nivelesDisponibles.map((nivel) => (
+                  <li key={nivel.slug}>
+                    <Link
+                      href={`/ejercicios/${nivel.slug}`}
+                      className="block px-4 py-2 hover:bg-brand-primary/20 hover:text-white transition-colors"
+                    >
+                      {nivel.nombre}
+                      <span className="block text-[11px] text-brand-light/70">
+                        {nivel.detalle}
+                      </span>
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </li>
           <li>
             <Link
               href="/#calendario"
@@ -149,6 +190,27 @@ export default function Navbar() {
                 Nuevo
               </span>
             </Link>
+          </li>
+          <li>
+            <Link
+              href="/ejercicios"
+              onClick={cerrarMenu}
+              className="block text-brand-light hover:text-white py-2"
+            >
+              Ejercicios
+            </Link>
+            <div className="flex justify-center gap-3">
+              {nivelesDisponibles.map((nivel) => (
+                <Link
+                  key={nivel.slug}
+                  href={`/ejercicios/${nivel.slug}`}
+                  onClick={cerrarMenu}
+                  className="text-sm text-brand-light/80 hover:text-white border border-brand-primary/30 rounded-md px-3 py-1"
+                >
+                  {nivel.nombre}
+                </Link>
+              ))}
+            </div>
           </li>
           <li>
             <Link
