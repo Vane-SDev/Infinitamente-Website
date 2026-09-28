@@ -1,8 +1,9 @@
 "use client";
 
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import { indicesPintados } from "@/lib/figuras";
 import { pasosDelEjercicio } from "@/lib/tiposRespuesta";
+import { EVENTO_WHATSAPP } from "../BotonWhatsApp";
 import EntradaComparar from "./EntradaComparar";
 import EntradaCompletar from "./EntradaCompletar";
 import EntradaPintar from "./EntradaPintar";
@@ -10,6 +11,7 @@ import EntradaPlanteo from "./EntradaPlanteo";
 import EntradaTexto from "./EntradaTexto";
 import Expresion from "./Expresion";
 import FiguraFraccion from "./FiguraFraccion";
+import PiMascota from "./PiMascota";
 import ResultadoCTA from "./ResultadoCTA";
 
 const INTENTOS_POR_DEFECTO = 3;
@@ -118,6 +120,13 @@ function reducer(state, action) {
   }
 }
 
+// Cómo reacciona Pi según el tono de la corrección.
+const estadoDePi = {
+  aviso: "pensando",
+  error: "oops",
+  exito: "contento",
+};
+
 const estilosFeedback = {
   aviso: "bg-amber-50 border-amber-300 text-amber-900",
   error: "bg-red-50 border-red-300 text-red-900",
@@ -137,6 +146,14 @@ export default function Ejercicio({ ejercicio }) {
     0,
     Math.min(state.intentosUsados, paso.pistas.length),
   );
+
+  // Avisa al botón de WhatsApp que puede aparecer (o esconderse de nuevo).
+  useEffect(() => {
+    const avisar = (visible) =>
+      window.dispatchEvent(new CustomEvent(EVENTO_WHATSAPP, { detail: visible }));
+    avisar(terminado);
+    return () => avisar(false);
+  }, [terminado]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -211,14 +228,24 @@ export default function Ejercicio({ ejercicio }) {
         terminado={terminado}
       />
 
-      <div aria-live="polite" role="status">
-        {state.feedback && (
-          <p
-            className={`mt-4 p-4 rounded-xl border ${estilosFeedback[state.feedback.tono]}`}
-          >
-            {state.feedback.texto}
-          </p>
-        )}
+      <div className="mt-4 flex items-center gap-2">
+        {/* La key vuelve a montar a Pi en cada corrección para repetir su animación */}
+        <PiMascota
+          key={`${state.paso}-${state.intentosUsados}-${state.feedback?.texto}`}
+          estado={state.feedback ? estadoDePi[state.feedback.tono] : "pensando"}
+          className="shrink-0 w-20 h-20 sm:w-24 sm:h-24"
+        />
+        <div aria-live="polite" role="status" className="flex-1 min-w-0 self-center">
+          {state.feedback ? (
+            <p className={`p-4 rounded-xl border ${estilosFeedback[state.feedback.tono]}`}>
+              {state.feedback.texto}
+            </p>
+          ) : (
+            <p className="text-gray-500">
+              Cuando tengas tu respuesta, tocá Comprobar. ¡Vos podés!
+            </p>
+          )}
+        </div>
       </div>
 
       {state.estado === "respondiendo" && pistasVistas.length > 1 && (

@@ -66,3 +66,76 @@ body {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
+/* Pi, la mascota de los ejercicios (src/components/ejercicios/PiMascota.js) */
+.pi-mascota .pi-cuerpo {
+  transform-box: view-box;
+  transform-origin: 150px 250px;
+}
+.pi-mascota .pi-infinito {
+  animation: piInfinito 5s linear infinite;
+}
+.pi-mascota .pi-ojo {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: piParpadeo 4s infinite;
+}
+.pi-mascota .pi-pupila {
+  transition: transform 0.3s;
+}
+.pi-contento .pi-cuerpo {
+  animation: piSalto 0.7s ease-in-out 2;
+}
+.pi-pensando .pi-cuerpo {
+  animation: piDuda 3s ease-in-out infinite;
+}
+.pi-pensando .pi-pupila {
+  transform: translate(4px, -5px);
+}
+.pi-pensando .pi-puntos circle {
+  animation: piPunto 1.2s infinite;
+}
+.pi-pensando .pi-puntos circle:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.pi-pensando .pi-puntos circle:nth-child(3) {
+  animation-delay: 0.4s;
+}
+.pi-oops .pi-cuerpo {
+  animation: piTambaleo 0.6s ease-in-out 2;
+}
+.pi-oops .pi-pupila {
+  transform: scale(0.7);
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+@keyframes piInfinito {
+  to { stroke-dashoffset: -100; }
+}
+@keyframes piParpadeo {
+  0%, 94%, 100% { transform: scaleY(1); }
+  97% { transform: scaleY(0.1); }
+}
+@keyframes piSalto {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+@keyframes piDuda {
+  0%, 100% { transform: rotate(-4deg); }
+  50% { transform: rotate(4deg); }
+}
+@keyframes piTambaleo {
+  0%, 100% { transform: rotate(0); }
+  25% { transform: rotate(-9deg); }
+  75% { transform: rotate(9deg); }
+}
+@keyframes piPunto {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pi-mascota * {
+    animation: none !important;
+  }
+}
