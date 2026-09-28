@@ -8,10 +8,12 @@ import EntradaComparar from "./EntradaComparar";
 import EntradaCompletar from "./EntradaCompletar";
 import EntradaPintar from "./EntradaPintar";
 import EntradaPlanteo from "./EntradaPlanteo";
+import EntradaRecta from "./EntradaRecta";
 import EntradaTexto from "./EntradaTexto";
 import Expresion from "./Expresion";
 import FiguraFraccion from "./FiguraFraccion";
 import PiMascota from "./PiMascota";
+import RectaNumerica from "./RectaNumerica";
 import ResultadoCTA from "./ResultadoCTA";
 
 const INTENTOS_POR_DEFECTO = 3;
@@ -23,6 +25,7 @@ const entradas = {
   completar: EntradaCompletar,
   planteo: EntradaPlanteo,
   comparar: EntradaComparar,
+  recta: EntradaRecta,
 };
 
 function valorInicial(paso, ejercicio) {
@@ -142,6 +145,7 @@ export default function Ejercicio({ ejercicio }) {
   const terminado = state.estado !== "respondiendo";
   const operacion = paso.incluyeOperacion ? null : (paso.operacion ?? ejercicio.operacion);
   const graficoFijo = ejercicio.grafico && !paso.incluyeGrafico;
+  const rectaFija = ejercicio.recta && !paso.incluyeGrafico;
   const pistasVistas = paso.pistas.slice(
     0,
     Math.min(state.intentosUsados, paso.pistas.length),
@@ -206,7 +210,7 @@ export default function Ejercicio({ ejercicio }) {
         </h3>
       )}
 
-      {(operacion || graficoFijo) && (
+      {(operacion || graficoFijo || rectaFija) && (
         <div className="py-6 px-2 sm:px-4 mb-6 rounded-xl bg-gray-50 border border-gray-100 space-y-6">
           {operacion && <Expresion texto={operacion} />}
           {graficoFijo && (
@@ -215,6 +219,7 @@ export default function Ejercicio({ ejercicio }) {
               pintadas={indicesPintados(ejercicio.grafico)}
             />
           )}
+          {rectaFija && <RectaNumerica recta={ejercicio.recta} />}
         </div>
       )}
 

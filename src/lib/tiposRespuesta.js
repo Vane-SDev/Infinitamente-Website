@@ -7,12 +7,15 @@ import {
   evaluarPintar,
   evaluarPlanteo,
   normalizarOperador,
+  parsearFraccion,
+  sonEquivalentes,
 } from "./fracciones";
 import { totalPartes } from "./figuras";
+import { textoFraccion, valorDeMarca } from "./recta";
 
 // Cada tipo de respuesta decide:
 // - entrada: qué ve el alumno para responder ("texto", "pintar", "completar",
-//   "comparar" o "planteo").
+//   "comparar", "planteo" o "recta").
 // - valorInicial (o una función que lo arma según el ejercicio) y
 //   evaluar(valor, ejercicio): cómo se corrige.
 // - mostrar(valor, ejercicio): cómo se nombra la respuesta en los mensajes.
@@ -132,6 +135,27 @@ const tiposRespuesta = {
     mensajesError: {
       vacio: "Completá todos los casilleros antes de comprobar.",
       formato: "En cada casillero va un número entero, sin barras ni letras.",
+    },
+    mensajesEquivalente: {},
+  },
+
+  // Tocar la marca de la recta numérica donde va la fracción de "respuesta".
+  ubicar: {
+    entrada: "recta",
+    incluyeGrafico: true, // la recta es la entrada, no se muestra aparte
+    valorInicial: null,
+    evaluar: (marca, ejercicio) => {
+      if (marca === null) return { resultado: "invalido", error: "vacio" };
+      return sonEquivalentes(valorDeMarca(ejercicio.recta, marca), parsearFraccion(ejercicio.respuesta))
+        ? { resultado: "correcto" }
+        : { resultado: "incorrecto" };
+    },
+    mostrar: (marca, ejercicio) =>
+      marca === null ? "" : textoFraccion(valorDeMarca(ejercicio.recta, marca)),
+    textoCorrecto: (texto) => `¡Excelente! Ahí va ${texto}.`,
+    ayudaFormato: "Tocá la marca de la recta y después Comprobar.",
+    mensajesError: {
+      vacio: "Tocá una marca de la recta antes de comprobar.",
     },
     mensajesEquivalente: {},
   },
