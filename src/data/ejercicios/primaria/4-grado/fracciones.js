@@ -173,20 +173,43 @@ const fracciones = {
       ],
     },
     {
-      id: "fracciones-4-grado-multiplicar-pizza", // único, sin repetir
+      id: "fracciones-4-grado-multiplicar-pizza",
       nivel: "primaria",
       tema: "Fracciones",
-      contexto: "Cada chico comió 2/8 de pizza. Si eran 3 chicos, ¿cuánta pizza comieron?",
+      contexto:
+        "Cada chico comió 2/8 de pizza. Si eran 3 chicos, ¿cuánta pizza comieron?",
       operacion: "3 × 2/8",
       tipoRespuesta: "fraccion",
-      respuesta: "6/8",
+      respuesta: "3/4",
       pistas: [
         "3 × 2/8 es sumar 2/8 tres veces.",
-        "Multiplicá solo el numerador: 3 × 2. El denominador queda igual.",
-        ],
-      resolucion: ["3 × 2/8 = 6/8 de pizza, que es 3/4."],
+        "Multiplicá solo el numerador: 3 × 2. El denominador queda igual. Después fijate si podés simplificar.",
+      ],
+      resolucion: [
+        "3 × 2/8 = 2/8 + 2/8 + 2/8.",
+        "Se multiplica solo el numerador: 3 × 2 = 6, así que da 6/8.",
+        "6 y 8 se pueden dividir por 2: 6/8 = 3/4 de pizza.",
+      ],
     },
-    
+    {
+      id: "fracciones-4-grado-multiplicar-leche",
+      nivel: "primaria",
+      tema: "Fracciones",
+      contexto:
+        "Tomi toma 3/4 de litro de leche por día. ¿Cuánta leche toma en 3 días? Escribilo como número mixto.",
+      operacion: "3 × 3/4",
+      tipoRespuesta: "mixta",
+      respuesta: "2 1/4",
+      pistas: [
+        "3 × 3/4 es sumar 3/4 tres veces: multiplicá solo el numerador.",
+        "3 × 3 = 9, así que da 9/4. ¿Cuántos enteros de 4/4 entran en 9/4?",
+      ],
+      resolucion: [
+        "3 × 3/4 = 3/4 + 3/4 + 3/4.",
+        "Se multiplica solo el numerador: 3 × 3 = 9, así que da 9/4.",
+        "4/4 forman un entero: 9/4 = 2 enteros y sobra 1/4. Toma 2 1/4 litros.",
+      ],
+    },
     {
       id: "fracciones-4-grado-plantear-jugo",
       nivel: "primaria",
