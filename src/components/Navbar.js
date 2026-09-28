@@ -24,7 +24,7 @@ export default function Navbar() {
         >
           <div className="bg-white/10 p-1 rounded-lg">
             <Image
-              src="/logo.png"
+              src="/Logo.png"
               alt="Logo Infinitamente Matemático"
               width={48}
               height={48}

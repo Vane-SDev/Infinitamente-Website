@@ -12,7 +12,7 @@ export const metadata = {
     template: "%s | Infinitamente Matemático",
   },
   description:
-    "Clases personalizadas online para estudiantes de habla hispana. 15 años de experiencia en apoyo escolar, ingreso universitario y nivelación para carreras de software.",
+    "Clases personalizadas online para estudiantes de habla hispana. 13 años de experiencia en apoyo escolar, ingreso universitario y nivelación para carreras de software.",
   keywords: [
     "clases de matemática online",
     "apoyo física secundaria",
@@ -43,7 +43,7 @@ const schemaMarkup = {
   "@context": "https://schema.org",
   "@type": "TutoringService", 
   name: "Infinitamente Matemático",
-  image: "https://infinitamentematematico.com/logo.png",
+  image: "https://infinitamentematematico.com/Logo.png",
   url: "https://infinitamentematematico.com",
   telephone: "+5492643171733",
   priceRange: "$$",
