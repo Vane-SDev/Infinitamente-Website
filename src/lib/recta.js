@@ -14,6 +14,8 @@ export function valorDeMarca({ desde, partes }, marca) {
   return simplificar({ numerador: desde * partes + marca, denominador: partes });
 }
 
+// Con el signo menos tipográfico (−3/4), como en las cuentas.
 export function textoFraccion({ numerador, denominador }) {
-  return denominador === 1 ? String(numerador) : `${numerador}/${denominador}`;
+  const texto = denominador === 1 ? String(numerador) : `${numerador}/${denominador}`;
+  return texto.replace("-", "−");
 }
