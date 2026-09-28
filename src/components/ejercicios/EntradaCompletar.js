@@ -27,6 +27,7 @@ export default function EntradaCompletar({ tipo, ejercicio, valor, onCambiar, on
               etiqueta={etiquetas[indice]}
               marcado={marcados.includes(indice)}
               deshabilitado={terminado}
+              conSigno={ejercicio.nivel === "secundaria"}
             />
           )}
         />

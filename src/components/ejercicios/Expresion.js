@@ -151,6 +151,10 @@ export default function Expresion({ texto, renderCasillero }) {
         );
       }
       default:
+        // Una letra sola es una incógnita (2/3 x), no una operación.
+        if (/^[a-z]$/.test(nodo.valor)) {
+          return <span aria-hidden="true" className="italic font-semibold">{nodo.valor}</span>;
+        }
         return (
           <span aria-hidden="true" className="text-brand-primary">
             {nodo.valor}

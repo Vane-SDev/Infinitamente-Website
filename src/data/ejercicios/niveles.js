@@ -17,7 +17,7 @@ export const niveles = [
   {
     slug: "secundaria",
     nombre: "Secundaria",
-    detalle: "1° y 2° año",
+    detalle: "1° a 3° año",
     descripcion: "Operaciones y ejercicios para practicar lo que ves en clase.",
     disponible: true,
     cursos: [
@@ -32,6 +32,12 @@ export const niveles = [
         nombre: "2° año",
         nombreCompleto: "2° año de secundaria",
         edad: "13 a 14 años",
+      },
+      {
+        slug: "3-anio",
+        nombre: "3° año",
+        nombreCompleto: "3° año de secundaria",
+        edad: "14 a 15 años",
       },
     ],
   },
