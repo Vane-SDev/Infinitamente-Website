@@ -1,9 +1,10 @@
 // Campo chico para escribir un número entero dentro de una cuenta.
-export default function Casillero({ valor, onCambiar, etiqueta, marcado, deshabilitado }) {
+// Con conSigno el teclado del celular muestra el menos (el numérico no lo trae).
+export default function Casillero({ valor, onCambiar, etiqueta, marcado, deshabilitado, conSigno }) {
   return (
     <input
       type="text"
-      inputMode="numeric"
+      inputMode={conSigno ? "text" : "numeric"}
       autoComplete="off"
       maxLength={4}
       aria-label={etiqueta}

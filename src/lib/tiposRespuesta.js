@@ -1,6 +1,7 @@
 import {
   evaluarCasilleros,
   evaluarComparacion,
+  evaluarEntre,
   evaluarFraccion,
   evaluarIdentificar,
   evaluarMixta,
@@ -135,6 +136,26 @@ const tiposRespuesta = {
     mensajesError: {
       vacio: "Completá todos los casilleros antes de comprobar.",
       formato: "En cada casillero va un número entero, sin barras ni letras.",
+    },
+    mensajesEquivalente: {},
+  },
+
+  // Escribir cualquier fracción entre las dos de "entre" (ej: ["2/5", "3/7"]).
+  // "respuesta" es solo un ejemplo para la resolución.
+  entre: {
+    ...tipoTexto,
+    evaluar: (valor, ejercicio) => evaluarEntre(valor, ejercicio.entre),
+    placeholder: "Ej: 5/12",
+    ayudaFormato: 'Escribí una fracción como "5/12". Hay muchas respuestas posibles.',
+    textoCorrecto: (texto, ejercicio) =>
+      `¡Excelente! ${texto} está entre ${ejercicio.entre[0]} y ${ejercicio.entre[1]}.`,
+    textoIncorrecto: (evaluacion) =>
+      evaluacion.motivo === "igualAlBorde"
+        ? "Tiene que estar entre las dos, no puede ser igual a una de ellas."
+        : "",
+    mensajesError: {
+      ...mensajesFormato,
+      formato: 'No reconozco ese formato. Escribí una fracción como "5/12".',
     },
     mensajesEquivalente: {},
   },

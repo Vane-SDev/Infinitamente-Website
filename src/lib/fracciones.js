@@ -171,6 +171,20 @@ export function evaluarPintar(cantidadPintadas, totalPartes, respuestaEsperada) 
     : { resultado: "incorrecto" };
 }
 
+// Escribir una fracción que esté entre dos dadas: vale cualquiera que quede
+// estrictamente entre las dos (ej: entre 2/5 y 3/7, 29/70 o 41/100). No hace
+// falta que esté simplificada.
+export function evaluarEntre(textoAlumno, [desde, hasta]) {
+  const alumno = parsearMixta(textoAlumno) ?? parsearFraccion(textoAlumno);
+  if (alumno.error) return { resultado: "invalido", error: alumno.error };
+
+  const valor = (f) => f.numerador / f.denominador;
+  const [menor, mayor] = [valor(parsearEsperada(desde)), valor(parsearEsperada(hasta))].sort((a, b) => a - b);
+  const x = valor(alumno);
+  if (x === menor || x === mayor) return { resultado: "incorrecto", motivo: "igualAlBorde" };
+  return x > menor && x < mayor ? { resultado: "correcto" } : { resultado: "incorrecto" };
+}
+
 // Completar casilleros (□) con números enteros. Si hay errores, devuelve qué
 // casilleros están mal (sus posiciones), sin decir el valor correcto.
 export function evaluarCasilleros(valores, esperados) {
