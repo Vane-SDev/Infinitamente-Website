@@ -173,6 +173,21 @@ const fracciones = {
       ],
     },
     {
+      id: "fracciones-4-grado-multiplicar-pizza", // único, sin repetir
+      nivel: "primaria",
+      tema: "Fracciones",
+      contexto: "Cada chico comió 2/8 de pizza. Si eran 3 chicos, ¿cuánta pizza comieron?",
+      operacion: "3 × 2/8",
+      tipoRespuesta: "fraccion",
+      respuesta: "6/8",
+      pistas: [
+        "3 × 2/8 es sumar 2/8 tres veces.",
+        "Multiplicá solo el numerador: 3 × 2. El denominador queda igual.",
+        ],
+      resolucion: ["3 × 2/8 = 6/8 de pizza, que es 3/4."],
+    },
+    
+    {
       id: "fracciones-4-grado-plantear-jugo",
       nivel: "primaria",
       tema: "Fracciones",
