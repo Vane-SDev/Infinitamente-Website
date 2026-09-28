@@ -10,7 +10,13 @@ export default function PracticaTema({ ejercicios }) {
   return (
     <div className="max-w-2xl mx-auto">
       {/* La key reinicia el estado del ejercicio al pasar al siguiente */}
-      {actual && <Ejercicio key={actual.id} ejercicio={actual} />}
+      {actual && (
+        <Ejercicio
+          key={actual.id}
+          ejercicio={actual}
+          esUltimo={indice === ejercicios.length - 1}
+        />
+      )}
 
       {ejercicios.length > 1 && (
         <div className="flex items-center justify-between mt-4">

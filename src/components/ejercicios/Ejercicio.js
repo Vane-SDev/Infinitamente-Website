@@ -136,7 +136,7 @@ const estilosFeedback = {
   exito: "bg-green-50 border-green-300 text-green-900",
 };
 
-export default function Ejercicio({ ejercicio }) {
+export default function Ejercicio({ ejercicio, esUltimo = true }) {
   const pasos = pasosDelEjercicio(ejercicio);
   const [state, dispatch] = useReducer(reducer, { pasos, ejercicio }, crearEstado);
   const paso = pasos[state.paso];
@@ -152,12 +152,14 @@ export default function Ejercicio({ ejercicio }) {
   );
 
   // Avisa al botón de WhatsApp que puede aparecer (o esconderse de nuevo).
+  // Igual que el cartel, solo al terminar el último ejercicio del tema.
+  const mostrarWhatsApp = terminado && esUltimo;
   useEffect(() => {
     const avisar = (visible) =>
       window.dispatchEvent(new CustomEvent(EVENTO_WHATSAPP, { detail: visible }));
-    avisar(terminado);
+    avisar(mostrarWhatsApp);
     return () => avisar(false);
-  }, [terminado]);
+  }, [mostrarWhatsApp]);
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -282,7 +284,8 @@ export default function Ejercicio({ ejercicio }) {
         </div>
       )}
 
-      {terminado && <ResultadoCTA acerto={state.estado === "acertado"} />}
+      {/* El cartel sale una sola vez, al terminar el último ejercicio del tema */}
+      {terminado && esUltimo && <ResultadoCTA acerto={state.estado === "acertado"} />}
     </article>
   );
 }
