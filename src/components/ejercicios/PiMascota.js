@@ -103,6 +103,19 @@ export default function PiMascota({ estado = "pensando", className = "" }) {
       objetivo = lugares[Math.floor(Math.random() * lugares.length)];
     }, 1800);
 
+    // Parpadea con los dos ojos a la vez, cada tanto y a veces dos veces seguidas.
+    let parpadeo;
+    function parpadear(veces) {
+      if (estadoRef.current !== "dormido") svg.dataset.parpadeo = "";
+      parpadeo = setTimeout(() => {
+        delete svg.dataset.parpadeo;
+        parpadeo = veces > 1
+          ? setTimeout(() => parpadear(veces - 1), 160)
+          : setTimeout(() => parpadear(Math.random() < 0.2 ? 2 : 1), 2500 + Math.random() * 3000);
+      }, 130);
+    }
+    parpadeo = setTimeout(() => parpadear(1), 2000 + Math.random() * 2000);
+
     function animar() {
       const e = estadoRef.current;
       const conPuntero = performance.now() - ultimoPuntero < 3000;
@@ -129,6 +142,7 @@ export default function PiMascota({ estado = "pensando", className = "" }) {
       window.removeEventListener("pointermove", mirarHacia);
       window.removeEventListener("pointerdown", mirarHacia);
       clearInterval(vistazo);
+      clearTimeout(parpadeo);
       cancelAnimationFrame(cuadro);
     };
   }, []);
@@ -239,7 +253,22 @@ export default function PiMascota({ estado = "pensando", className = "" }) {
         )}
       </svg>
 
+      {estado === "impaciente" && <Numeros />}
       {estado === "final" && <Confeti />}
+    </span>
+  );
+}
+
+// Cuando nadie contesta, Pi le tira a la pantalla los dígitos de π, uno por
+// uno, como quien golpea el vidrio para llamar la atención.
+function Numeros() {
+  return (
+    <span aria-hidden="true" className="pi-numeros">
+      {["3", "1", "4", "1", "5"].map((n, i) => (
+        <span key={i} style={{ animationDelay: `${0.3 + i * 1.6}s` }}>
+          {n}
+        </span>
+      ))}
     </span>
   );
 }

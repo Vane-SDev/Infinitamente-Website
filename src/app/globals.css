@@ -77,7 +77,10 @@ body {
 .pi-mascota .pi-ojo {
   transform-box: fill-box;
   transform-origin: center;
-  animation: piParpadeo 4.5s infinite;
+  transition: transform 0.07s;
+}
+.pi-mascota[data-parpadeo] .pi-ojo {
+  transform: scaleY(0.1);
 }
 .pi-mascota .pi-ceja {
   transition: transform 0.3s;
@@ -120,7 +123,7 @@ body {
 .pi-fin .pi-ceja-izq { transform: rotate(12deg); }
 .pi-fin .pi-ceja-der { transform: rotate(-12deg); }
 /* nadie responde: se impacienta y después se duerme */
-.pi-impaciente .pi-cuerpo { animation: piImpaciente 0.35s ease-in-out infinite alternate; }
+.pi-impaciente .pi-cuerpo { animation: piLanzar 1.6s ease-in-out infinite; }
 .pi-dormido .pi-cuerpo { transform: rotate(8deg); }
 .pi-dormido .pi-ojo { animation: none; transform: scaleY(0.12); }
 .pi-zzz text { animation: piZzz 2.4s ease-in-out infinite; }
@@ -139,6 +142,21 @@ body {
   transform-origin: center;
   animation: piGiro 0.25s linear infinite;
 }
+.pi-numeros {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+.pi-numeros span {
+  position: absolute;
+  left: 58%;
+  top: 22%;
+  font: 700 22px/1 Georgia, serif;
+  color: #A728D4;
+  text-shadow: 0 2px 6px rgba(91, 29, 153, 0.35);
+  opacity: 0;
+  animation: piNumero 8s ease-out infinite;
+}
 .pi-confeti {
   position: absolute;
   inset: -40px -120px auto;
@@ -156,10 +174,6 @@ body {
   animation: piConfeti 1.6s ease-in forwards;
 }
 
-@keyframes piParpadeo {
-  0%, 93%, 100% { transform: scaleY(1); }
-  96% { transform: scaleY(0.1); }
-}
 @keyframes piSalto {
   0%, 100% { transform: translateY(0); }
   45% { transform: translateY(-22px) scaleY(1.04); }
@@ -177,9 +191,20 @@ body {
   0%, 100% { transform: translateX(0); }
   50% { transform: translateX(2px); }
 }
-@keyframes piImpaciente {
-  from { transform: rotate(-2deg); }
-  to { transform: rotate(2deg) translateY(-3px); }
+@keyframes piLanzar {
+  0%, 100% { transform: rotate(0); }
+  12% { transform: rotate(-8deg) translateX(-4px); }
+  22% { transform: rotate(7deg) translateY(-6px) scale(1.06); }
+  34% { transform: rotate(0); }
+}
+@keyframes piNumero {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.4) rotate(0); }
+  3% { opacity: 1; }
+  11% { opacity: 1; transform: translate(40px, -60px) scale(3.6) rotate(200deg); }
+  12% { transform: translate(40px, -60px) scale(4.2) rotate(360deg); }
+  13% { transform: translate(40px, -60px) scale(3.9) rotate(360deg); }
+  20% { opacity: 0; transform: translate(40px, -60px) scale(3.9) rotate(360deg); }
+  100% { opacity: 0; }
 }
 @keyframes piZzz {
   0% { opacity: 0; transform: translate(0, 0); }
@@ -217,6 +242,7 @@ body {
 
 @media (prefers-reduced-motion: reduce) {
   .pi-mascota *,
+  .pi-numeros span,
   .pi-confeti span {
     animation: none !important;
     transition: none !important;
