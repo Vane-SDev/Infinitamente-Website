@@ -1,7 +1,13 @@
 import { notFound } from "next/navigation";
 import MigasEjercicios from "@/components/ejercicios/MigasEjercicios";
 import PracticaTema from "@/components/ejercicios/PracticaTema";
-import { getCurso, getNivel, getRutasEjercicios, getTema } from "@/data/ejercicios";
+import {
+  getCurso,
+  getNivel,
+  getRutasEjercicios,
+  getSiguienteCurso,
+  getTema,
+} from "@/data/ejercicios";
 
 // Genera todas las combinaciones nivel + curso + tema en el build.
 export function generateStaticParams() {
@@ -60,7 +66,10 @@ export default async function TemaPage({ params }) {
           </p>
         </header>
 
-        <PracticaTema ejercicios={tema.ejercicios} />
+        <PracticaTema
+          ejercicios={tema.ejercicios}
+          siguiente={getSiguienteCurso(nivel.slug, curso.slug, tema.slug)}
+        />
       </div>
     </div>
   );

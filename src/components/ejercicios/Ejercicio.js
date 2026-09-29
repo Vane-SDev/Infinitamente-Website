@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { indicesPintados } from "@/lib/figuras";
 import { pasosDelEjercicio } from "@/lib/tiposRespuesta";
 import { EVENTO_WHATSAPP } from "../BotonWhatsApp";
@@ -17,6 +17,25 @@ import RectaNumerica from "./RectaNumerica";
 import ResultadoCTA from "./ResultadoCTA";
 
 const INTENTOS_POR_DEFECTO = 3;
+
+// Las frases de Pi son las que usa Vane en sus clases.
+const FRASES = {
+  acierto: ["¡Bien, perfecto!", "¡Viste que lo sabías!", "¡Ahí vamos!"],
+  duda: "¿Estás seguro?…",
+  error: ["Vas bien.", "Recordá: todo lo que viste de algo sirve."],
+  cuidado: "¡Cuidado! Te me desviaste del camino…",
+  ultimo: "Último intento… vas bien, pensalo con calma.",
+  impaciente: "¿Y? ¡Dale que vos podés!",
+  dormido: "Zzz… ¿seguimos?",
+  final: "¡Terminaste el tema! ¡Viste que lo sabías!",
+  finalSinAcertar: "¡Terminaste el tema! Todo lo que viste sirve.",
+};
+
+// Si el alumno no toca nada, Pi se impacienta y después se duerme.
+const SEGUNDOS_IMPACIENTE = 25;
+const SEGUNDOS_DORMIDO = 60;
+
+const elegir = (lista, azar) => lista[Math.floor(azar * lista.length)];
 
 // El tipo de respuesta elige cuál de estas entradas se muestra.
 const entradas = {
@@ -51,7 +70,8 @@ function reducer(state, action) {
       return { ...state, valor: action.valor, evaluacion: null };
 
     case "responder": {
-      const { evaluacion, paso, texto, textoCorrecto, valorSiguiente, maxIntentos } = action;
+      const { evaluacion, paso, texto, textoCorrecto, valorSiguiente, maxIntentos, racha, azar } =
+        action;
       const haySiguiente = valorSiguiente !== undefined;
       const pasarAlSiguiente = (feedback) => ({
         ...state,
@@ -67,7 +87,11 @@ function reducer(state, action) {
       if (evaluacion.resultado === "invalido") {
         return {
           ...state,
-          feedback: { tono: "aviso", texto: paso.mensajesError[evaluacion.error] },
+          feedback: {
+            tono: "aviso",
+            texto: paso.mensajesError[evaluacion.error],
+            pi: "pensando",
+          },
         };
       }
       if (evaluacion.resultado === "equivalente") {
@@ -76,11 +100,23 @@ function reducer(state, action) {
           feedback: {
             tono: "aviso",
             texto: paso.mensajesEquivalente[evaluacion.motivo](texto),
+            pi: "duda",
+            frase: FRASES.duda,
           },
         };
       }
       if (evaluacion.resultado === "correcto") {
-        const feedback = { tono: "exito", texto: textoCorrecto };
+        // Cada 3 ejercicios seguidos bien, Pi lo festeja.
+        const seguidas = racha + 1;
+        const feedback = {
+          tono: "exito",
+          texto: textoCorrecto.replace(/^¡Excelente! /, ""),
+          pi: "contento",
+          frase:
+            !haySiguiente && seguidas % 3 === 0
+              ? `¡Ahí vamos! ¡${seguidas} seguidas!`
+              : elegir(FRASES.acierto, azar),
+        };
         if (haySiguiente) return pasarAlSiguiente(feedback);
         return { ...state, estado: "acertado", evaluacion, feedback };
       }
@@ -88,7 +124,12 @@ function reducer(state, action) {
       const intentosUsados = state.intentosUsados + 1;
       if (intentosUsados >= maxIntentos) {
         if (haySiguiente && paso.alAgotar === "continuar") {
-          return pasarAlSiguiente({ tono: "error", texto: paso.textoAgotado });
+          return pasarAlSiguiente({
+            tono: "error",
+            texto: paso.textoAgotado,
+            pi: "vasbien",
+            frase: elegir(FRASES.error, azar),
+          });
         }
         return {
           ...state,
@@ -98,6 +139,7 @@ function reducer(state, action) {
           feedback: {
             tono: "error",
             texto: "Esta vez no salió, pero no pasa nada. Mirá cómo se resuelve paso a paso.",
+            pi: "fin",
           },
         };
       }
@@ -110,11 +152,19 @@ function reducer(state, action) {
         `Te ${restantes === 1 ? "queda 1 intento" : `quedan ${restantes} intentos`}.`,
         pista && `Pista: ${pista}`,
       ];
+      // Si venía de varios ejercicios bien y se equivoca en el primer
+      // intento, Pi frena: "te me desviaste del camino".
+      const reaccion =
+        restantes === 1
+          ? { pi: "nervioso", frase: FRASES.ultimo }
+          : state.intentosUsados === 0 && racha >= 2
+            ? { pi: "cuidado", frase: FRASES.cuidado }
+            : { pi: "vasbien", frase: elegir(FRASES.error, azar) };
       return {
         ...state,
         intentosUsados,
         evaluacion,
-        feedback: { tono: "error", texto: partes.filter(Boolean).join(" ") },
+        feedback: { tono: "error", texto: partes.filter(Boolean).join(" "), ...reaccion },
       };
     }
 
@@ -123,20 +173,13 @@ function reducer(state, action) {
   }
 }
 
-// Cómo reacciona Pi según el tono de la corrección.
-const estadoDePi = {
-  aviso: "pensando",
-  error: "oops",
-  exito: "contento",
-};
-
 const estilosFeedback = {
   aviso: "bg-amber-50 border-amber-300 text-amber-900",
   error: "bg-red-50 border-red-300 text-red-900",
   exito: "bg-green-50 border-green-300 text-green-900",
 };
 
-export default function Ejercicio({ ejercicio, esUltimo = true }) {
+export default function Ejercicio({ ejercicio, esUltimo = true, racha = 0, onTerminar }) {
   const pasos = pasosDelEjercicio(ejercicio);
   const [state, dispatch] = useReducer(reducer, { pasos, ejercicio }, crearEstado);
   const paso = pasos[state.paso];
@@ -161,6 +204,32 @@ export default function Ejercicio({ ejercicio, esUltimo = true }) {
     return () => avisar(false);
   }, [mostrarWhatsApp]);
 
+  // Avisa a la práctica cuando termina, para llevar la racha y los decimales.
+  useEffect(() => {
+    if (terminado) onTerminar?.(state.estado === "acertado");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [terminado]);
+
+  // Si el alumno no toca nada por un rato, Pi se impacienta y después se duerme.
+  const [quieto, setQuieto] = useState(null);
+  useEffect(() => {
+    setQuieto(null);
+    if (terminado) return;
+    const timers = [
+      setTimeout(() => setQuieto("impaciente"), SEGUNDOS_IMPACIENTE * 1000),
+      setTimeout(() => setQuieto("dormido"), SEGUNDOS_DORMIDO * 1000),
+    ];
+    return () => timers.forEach(clearTimeout);
+  }, [state.valor, state.feedback, terminado]);
+
+  const temaTerminado = terminado && esUltimo;
+  const estadoPi = temaTerminado ? "final" : (quieto ?? state.feedback?.pi ?? "pensando");
+  const frasePi = temaTerminado
+    ? FRASES[state.estado === "acertado" ? "final" : "finalSinAcertar"]
+    : quieto
+      ? FRASES[quieto]
+      : state.feedback?.frase;
+
   function handleSubmit(e) {
     e.preventDefault();
     const texto = paso.mostrar(state.valor, ejercicio);
@@ -174,6 +243,8 @@ export default function Ejercicio({ ejercicio, esUltimo = true }) {
         paso.textoCorrecto?.(texto, ejercicio) ?? `¡Excelente! ${texto} es correcto.`,
       valorSiguiente: siguiente && valorInicial(siguiente, ejercicio),
       maxIntentos,
+      racha,
+      azar: Math.random(),
     });
   }
 
@@ -238,18 +309,19 @@ export default function Ejercicio({ ejercicio, esUltimo = true }) {
       <div className="mt-4 flex items-center gap-2">
         {/* La key vuelve a montar a Pi en cada corrección para repetir su animación */}
         <PiMascota
-          key={`${state.paso}-${state.intentosUsados}-${state.feedback?.texto}`}
-          estado={state.feedback ? estadoDePi[state.feedback.tono] : "pensando"}
-          className="shrink-0 w-20 h-20 sm:w-24 sm:h-24"
+          key={`${state.paso}-${state.intentosUsados}-${state.feedback?.texto}-${quieto}-${temaTerminado}`}
+          estado={estadoPi}
+          className="shrink-0 w-24 h-24 sm:w-28 sm:h-28"
         />
         <div aria-live="polite" role="status" className="flex-1 min-w-0 self-center">
           {state.feedback ? (
             <p className={`p-4 rounded-xl border ${estilosFeedback[state.feedback.tono]}`}>
+              {frasePi && <strong className="block mb-1">{frasePi}</strong>}
               {state.feedback.texto}
             </p>
           ) : (
-            <p className="text-gray-500">
-              Cuando tengas tu respuesta, tocá Comprobar. ¡Vos podés!
+            <p className={frasePi ? "font-semibold text-brand-dark" : "text-gray-500"}>
+              {frasePi ?? "Cuando tengas tu respuesta, tocá Comprobar. ¡Vos podés!"}
             </p>
           )}
         </div>

@@ -67,75 +67,158 @@ body {
   scrollbar-width: none;
 }
 /* Pi, la mascota de los ejercicios (src/components/ejercicios/PiMascota.js) */
-.pi-mascota .pi-cuerpo {
+.pi-mascota * {
   transform-box: view-box;
-  transform-origin: 150px 250px;
 }
-.pi-mascota .pi-infinito {
-  animation: piInfinito 5s linear infinite;
+.pi-mascota .pi-cuerpo {
+  transform-origin: 150px 250px;
+  transition: transform 0.3s;
 }
 .pi-mascota .pi-ojo {
   transform-box: fill-box;
   transform-origin: center;
-  animation: piParpadeo 4s infinite;
+  animation: piParpadeo 4.5s infinite;
 }
-.pi-mascota .pi-pupila {
+.pi-mascota .pi-ceja {
   transition: transform 0.3s;
 }
-.pi-contento .pi-cuerpo {
-  animation: piSalto 0.7s ease-in-out 2;
+.pi-mascota .pi-ceja-izq {
+  transform-origin: 128px 60px;
 }
-.pi-pensando .pi-cuerpo {
-  animation: piDuda 3s ease-in-out infinite;
+.pi-mascota .pi-ceja-der {
+  transform-origin: 170px 60px;
 }
-.pi-pensando .pi-pupila {
-  transform: translate(4px, -5px);
+.pi-mascota .pi-bola {
+  opacity: 0;
 }
-.pi-pensando .pi-puntos circle {
-  animation: piPunto 1.2s infinite;
-}
-.pi-pensando .pi-puntos circle:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.pi-pensando .pi-puntos circle:nth-child(3) {
-  animation-delay: 0.4s;
-}
-.pi-oops .pi-cuerpo {
-  animation: piTambaleo 0.6s ease-in-out 2;
-}
-.pi-oops .pi-pupila {
-  transform: scale(0.7);
-  transform-box: fill-box;
-  transform-origin: center;
+.pi-mascota .pi-bola-mov {
+  offset-rotate: 0deg;
 }
 
-@keyframes piInfinito {
-  to { stroke-dashoffset: -100; }
+/* contento: salta y levanta las cejas */
+.pi-contento .pi-cuerpo { animation: piSalto 0.55s ease-in-out 2; }
+.pi-contento .pi-ceja { transform: translateY(-5px); }
+/* pensando: se balancea */
+.pi-pensando .pi-cuerpo { animation: piBalanceo 3s ease-in-out infinite; }
+/* ¿estás seguro?: ladea el cuerpo, levanta una ceja y entrecierra un ojo */
+.pi-duda .pi-cuerpo { transform: rotate(-6deg) translateX(-6px); }
+.pi-duda .pi-ceja-izq { transform: translateY(-7px) rotate(-10deg); }
+.pi-duda .pi-ojo-der { animation: none; transform: scaleY(0.55); }
+/* vas bien: se inclina hacia el alumno */
+.pi-vasbien .pi-cuerpo { transform: rotate(6deg) translateX(8px); }
+.pi-vasbien .pi-ceja { transform: translateY(-4px); }
+/* te me desviaste del camino: frena y frunce las cejas */
+.pi-cuidado .pi-cuerpo { animation: piFrenar 0.5s ease-out forwards; }
+.pi-cuidado .pi-ceja-izq,
+.pi-nervioso .pi-ceja-izq { transform: rotate(14deg); }
+.pi-cuidado .pi-ceja-der,
+.pi-nervioso .pi-ceja-der { transform: rotate(-14deg); }
+/* último intento: tiembla */
+.pi-nervioso .pi-cuerpo { animation: piTemblor 0.12s linear infinite; }
+/* sin intentos */
+.pi-fin .pi-cuerpo { transform: translateY(6px); }
+.pi-fin .pi-ceja-izq { transform: rotate(12deg); }
+.pi-fin .pi-ceja-der { transform: rotate(-12deg); }
+/* nadie responde: se impacienta y después se duerme */
+.pi-impaciente .pi-cuerpo { animation: piImpaciente 0.35s ease-in-out infinite alternate; }
+.pi-dormido .pi-cuerpo { transform: rotate(8deg); }
+.pi-dormido .pi-ojo { animation: none; transform: scaleY(0.12); }
+.pi-zzz text { animation: piZzz 2.4s ease-in-out infinite; }
+.pi-zzz text:nth-child(2) { animation-delay: 0.8s; }
+.pi-zzz text:nth-child(3) { animation-delay: 1.6s; }
+.pi-puntos circle { animation: piPunto 1.2s infinite; }
+.pi-puntos circle:nth-child(2) { animation-delay: 0.2s; }
+.pi-puntos circle:nth-child(3) { animation-delay: 0.4s; }
+.pi-flota { animation: piFlota 1.4s ease-in-out infinite alternate; }
+/* terminó el tema: se hace bolita y corre por el infinito */
+.pi-final .pi-cuerpo { animation: piBolita 1.9s ease-in-out; }
+.pi-final .pi-bola { animation: piMostrarBola 1.9s; }
+.pi-final .pi-bola-mov { animation: piCorrer 1.3s 0.3s ease-in-out; }
+.pi-final .pi-bola-giro {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: piGiro 0.25s linear infinite;
 }
+.pi-confeti {
+  position: absolute;
+  inset: -40px -120px auto;
+  height: 260px;
+  pointer-events: none;
+  overflow: hidden;
+}
+.pi-confeti span {
+  position: absolute;
+  top: 0;
+  width: 7px;
+  height: 11px;
+  border-radius: 2px;
+  opacity: 0;
+  animation: piConfeti 1.6s ease-in forwards;
+}
+
 @keyframes piParpadeo {
-  0%, 94%, 100% { transform: scaleY(1); }
-  97% { transform: scaleY(0.1); }
+  0%, 93%, 100% { transform: scaleY(1); }
+  96% { transform: scaleY(0.1); }
 }
 @keyframes piSalto {
   0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-14px); }
+  45% { transform: translateY(-22px) scaleY(1.04); }
 }
-@keyframes piDuda {
-  0%, 100% { transform: rotate(-4deg); }
-  50% { transform: rotate(4deg); }
+@keyframes piBalanceo {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
 }
-@keyframes piTambaleo {
-  0%, 100% { transform: rotate(0); }
-  25% { transform: rotate(-9deg); }
-  75% { transform: rotate(9deg); }
+@keyframes piFrenar {
+  0% { transform: translateX(10px); }
+  60% { transform: translateX(-10px) rotate(-6deg); }
+  100% { transform: translateX(-8px) rotate(-5deg); }
+}
+@keyframes piTemblor {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(2px); }
+}
+@keyframes piImpaciente {
+  from { transform: rotate(-2deg); }
+  to { transform: rotate(2deg) translateY(-3px); }
+}
+@keyframes piZzz {
+  0% { opacity: 0; transform: translate(0, 0); }
+  30% { opacity: 1; }
+  100% { opacity: 0; transform: translate(14px, -26px); }
 }
 @keyframes piPunto {
   0%, 100% { opacity: 0.3; }
   50% { opacity: 1; }
 }
+@keyframes piFlota {
+  to { transform: translateY(-6px); }
+}
+@keyframes piBolita {
+  0% { transform: scale(1); }
+  15%, 85% { transform: scale(0.1) rotate(360deg); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+@keyframes piMostrarBola {
+  0%, 12% { opacity: 0; }
+  18%, 82% { opacity: 1; }
+  90%, 100% { opacity: 0; }
+}
+@keyframes piCorrer {
+  from { offset-distance: 0%; }
+  to { offset-distance: 100%; }
+}
+@keyframes piGiro {
+  to { transform: rotate(360deg); }
+}
+@keyframes piConfeti {
+  0% { opacity: 1; transform: translate(0, 0) rotate(0); }
+  100% { opacity: 0.2; transform: translate(var(--dx), 240px) rotate(var(--giro)); }
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .pi-mascota * {
+  .pi-mascota *,
+  .pi-confeti span {
     animation: none !important;
+    transition: none !important;
   }
 }

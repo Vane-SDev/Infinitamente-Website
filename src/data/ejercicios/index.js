@@ -60,3 +60,17 @@ export function getRutasEjercicios() {
       })),
   );
 }
+
+// El mismo tema en el curso siguiente (para "Subir de nivel" al terminar).
+// Devuelve null si es el último curso que tiene ese tema.
+export function getSiguienteCurso(nivelSlug, cursoSlug, temaSlug) {
+  const rutas = getRutasEjercicios();
+  const actual = rutas.findIndex((r) => r.nivel === nivelSlug && r.curso === cursoSlug);
+  const siguiente = rutas.slice(actual + 1).find((r) => r.temas.includes(temaSlug));
+  if (actual === -1 || !siguiente) return null;
+  const curso = getCurso(siguiente.nivel, siguiente.curso);
+  return {
+    nombre: curso.nombreCompleto,
+    href: `/ejercicios/${siguiente.nivel}/${siguiente.curso}/${temaSlug}`,
+  };
+}
