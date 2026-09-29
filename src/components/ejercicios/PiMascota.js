@@ -148,7 +148,7 @@ export default function PiMascota({ estado = "pensando", className = "" }) {
   }, []);
 
   return (
-    <span className={`relative inline-block ${className}`}>
+    <span className={`relative z-10 inline-block ${className}`}>
       <svg
         ref={svgRef}
         viewBox="20 10 270 260"
@@ -253,19 +253,23 @@ export default function PiMascota({ estado = "pensando", className = "" }) {
         )}
       </svg>
 
-      {estado === "impaciente" && <Numeros />}
+      {estado === "impaciente" && <Golpes />}
       {estado === "final" && <Confeti />}
     </span>
   );
 }
 
-// Cuando nadie contesta, Pi le tira a la pantalla los dígitos de π, uno por
-// uno, como quien golpea el vidrio para llamar la atención.
-function Numeros() {
+// Cuando nadie contesta, Pi se acerca y golpea el vidrio de la pantalla
+// (toc, toc) y después le tira un dígito de π, que se estampa contra el
+// vidrio y se resbala. Cada vuelta tira el dígito siguiente.
+function Golpes() {
   return (
-    <span aria-hidden="true" className="pi-numeros">
+    <span aria-hidden="true" className="pi-golpes">
+      <span className="pi-toc pi-toc-1" />
+      <span className="pi-toc pi-toc-2" />
+      <span className="pi-toc pi-toc-3" />
       {["3", "1", "4", "1", "5"].map((n, i) => (
-        <span key={i} style={{ animationDelay: `${0.3 + i * 1.6}s` }}>
+        <span key={i} className="pi-numero" style={{ animationDelay: `${1.76 + i * 3.2}s` }}>
           {n}
         </span>
       ))}

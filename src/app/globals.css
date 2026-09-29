@@ -123,7 +123,10 @@ body {
 .pi-fin .pi-ceja-izq { transform: rotate(12deg); }
 .pi-fin .pi-ceja-der { transform: rotate(-12deg); }
 /* nadie responde: se impacienta y después se duerme */
-.pi-impaciente .pi-cuerpo { animation: piLanzar 1.6s ease-in-out infinite; }
+.pi-mascota.pi-impaciente {
+  transform-origin: 50% 35%;
+  animation: piGolpe 3.2s ease-in-out infinite;
+}
 .pi-dormido .pi-cuerpo { transform: rotate(8deg); }
 .pi-dormido .pi-ojo { animation: none; transform: scaleY(0.12); }
 .pi-zzz text { animation: piZzz 2.4s ease-in-out infinite; }
@@ -142,20 +145,59 @@ body {
   transform-origin: center;
   animation: piGiro 0.25s linear infinite;
 }
-.pi-numeros {
+.pi-golpes {
   position: absolute;
   inset: 0;
   pointer-events: none;
 }
-.pi-numeros span {
+/* la onda y el brillo en el vidrio donde Pi golpea */
+.pi-toc {
   position: absolute;
-  left: 58%;
-  top: 22%;
-  font: 700 22px/1 Georgia, serif;
-  color: #A728D4;
-  text-shadow: 0 2px 6px rgba(91, 29, 153, 0.35);
+  left: 50%;
+  top: 30%;
+  width: 70px;
+  height: 70px;
+  margin: -35px 0 0 -35px;
+  border: 3px solid rgba(167, 40, 212, 0.6);
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.85) 0 18%, rgba(255, 255, 255, 0) 45%);
+  box-shadow: 0 0 0 7px rgba(167, 40, 212, 0.18);
   opacity: 0;
-  animation: piNumero 8s ease-out infinite;
+  animation: piToc 3.2s ease-out infinite;
+}
+.pi-toc-1::after,
+.pi-toc-2::after {
+  content: "¡toc!";
+  position: absolute;
+  left: 78%;
+  top: -18px;
+  font: 800 15px/1 system-ui, sans-serif;
+  color: #5b1d99;
+  white-space: nowrap;
+}
+.pi-toc-2::after {
+  left: 92%;
+  top: -4px;
+}
+.pi-toc-1 { animation-delay: 0.35s; }
+.pi-toc-2 { animation-delay: 0.8s; }
+.pi-toc-3 {
+  left: calc(50% + 34px);
+  top: calc(20% - 46px);
+  animation-delay: 2.18s;
+}
+/* el dígito que se estampa: letra grande sin sombra, para que se vea nítido */
+.pi-numero {
+  position: absolute;
+  left: 50%;
+  top: 20%;
+  margin: -0.5em 0 0 -0.3em;
+  font: 700 44px/1 Georgia, serif;
+  color: #A728D4;
+  -webkit-text-stroke: 4px #fff;
+  paint-order: stroke fill;
+  opacity: 0;
+  animation: piNumero 16s ease-out infinite;
 }
 .pi-confeti {
   position: absolute;
@@ -191,19 +233,30 @@ body {
   0%, 100% { transform: translateX(0); }
   50% { transform: translateX(2px); }
 }
-@keyframes piLanzar {
-  0%, 100% { transform: rotate(0); }
-  12% { transform: rotate(-8deg) translateX(-4px); }
-  22% { transform: rotate(7deg) translateY(-6px) scale(1.06); }
-  34% { transform: rotate(0); }
+/* se acerca al vidrio, se aplasta dos veces (toc, toc) y después lanza */
+@keyframes piGolpe {
+  0%, 30%, 64%, 100% { transform: none; }
+  8% { transform: scale(1.28) translateY(-4px); }
+  11% { transform: scale(1.4, 1.16); }
+  15%, 21% { transform: scale(1.28); }
+  25% { transform: scale(1.4, 1.16); }
+  50% { transform: rotate(-8deg) translateX(-4px); }
+  56% { transform: rotate(7deg) translateY(-6px) scale(1.06); }
+}
+@keyframes piToc {
+  0% { opacity: 0; transform: scale(0.4); }
+  2% { opacity: 1; }
+  12% { opacity: 0; transform: scale(1.5); }
+  100% { opacity: 0; }
 }
 @keyframes piNumero {
-  0% { opacity: 0; transform: translate(0, 0) scale(0.4) rotate(0); }
-  3% { opacity: 1; }
-  11% { opacity: 1; transform: translate(40px, -60px) scale(3.6) rotate(200deg); }
-  12% { transform: translate(40px, -60px) scale(4.2) rotate(360deg); }
-  13% { transform: translate(40px, -60px) scale(3.9) rotate(360deg); }
-  20% { opacity: 0; transform: translate(40px, -60px) scale(3.9) rotate(360deg); }
+  0% { opacity: 0; transform: translate(0, 0) scale(0.25); }
+  0.5% { opacity: 1; }
+  2.6% { transform: translate(34px, -46px) scale(1); }
+  3% { transform: translate(34px, -46px) scale(1.4, 0.65); }
+  3.6% { transform: translate(34px, -46px) scale(1.05, 1); }
+  4.2%, 8% { opacity: 1; transform: translate(34px, -46px) scale(1.15); }
+  12% { opacity: 0; transform: translate(34px, -12px) scale(1.15); }
   100% { opacity: 0; }
 }
 @keyframes piZzz {
@@ -241,8 +294,9 @@ body {
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .pi-mascota,
   .pi-mascota *,
-  .pi-numeros span,
+  .pi-golpes span,
   .pi-confeti span {
     animation: none !important;
     transition: none !important;
