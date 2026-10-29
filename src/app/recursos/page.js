@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 export default function RecursosIndexPage() {
-  // Esta lista simula tu índice. Más adelante, podés automatizar esto para que lea todos los archivos de tu carpeta 'data' directamente.
   const apuntes = [
     {
       id: "fracciones",

@@ -1,7 +1,6 @@
 import Link from "next/link";
 
-// El link a la guía es provisorio: en el Entregable 3 se reemplaza por el
-// formulario que la envía por mail con Brevo.
+// Provisorio: la guía va a llegar por mail con un formulario de Brevo.
 const CTA = {
   guia: {
     texto: "Quiero la guía de fracciones gratis",

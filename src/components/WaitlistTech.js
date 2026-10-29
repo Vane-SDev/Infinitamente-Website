@@ -20,7 +20,6 @@ export default function WaitlistTech() {
           </span>
         </h2>
 
-        {/* Copy universalizado para todo Hispanoamérica */}
         <p className="text-gray-300 text-lg mb-4 max-w-2xl mx-auto leading-relaxed">
           Las carreras de informática y desarrollo de software tienen un filtro
           inicial estricto basado en{" "}
